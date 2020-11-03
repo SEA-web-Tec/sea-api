@@ -17,3 +17,7 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+Route.group( () => {
+    Route.post('grupos/crear', 'GrupoController.store');
+}).prefix('api/v1/')
