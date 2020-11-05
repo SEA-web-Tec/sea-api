@@ -1,6 +1,5 @@
 'use strict'
 
-const Usuario = use('app/Models/Usuario.js')
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 

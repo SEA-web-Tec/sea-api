@@ -1,5 +1,5 @@
 "use strict";
-
+const Usuario = use('app/Models/Usuario.js')
 class UsuarioController {
   store({ request }) {
     const {
