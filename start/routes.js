@@ -20,4 +20,5 @@ Route.on('/').render('welcome')
 
 Route.group( () => {
     Route.post('grupos/crear', 'GrupoController.store');
+    Route.post('registrar/usuario', 'UsuarioController.store')
 }).prefix('api/v1/')
