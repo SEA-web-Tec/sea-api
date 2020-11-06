@@ -1,5 +1,5 @@
 "use strict";
-const Indicadorponderacion = use('app/Models/Calendarizaciones.js')
+const Calendarizaciones = use('app/Models/Calendarizaciones.js')
 class CalendarizacionesController {
   store({ request }) {
     const {
@@ -12,7 +12,7 @@ class CalendarizacionesController {
         fecha_limite2da,
     } = request.all();
       
-    const calendarizaciones = calendarizaciones.create({
+    const calendarizaciones = Calendarizaciones.create({
         id_evidencia_aprendizaje,
         instrucciones,
         es_por_equipo,

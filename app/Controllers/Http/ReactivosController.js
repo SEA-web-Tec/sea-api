@@ -1,5 +1,5 @@
 "use strict";
-const Indicadorponderacion = use('app/Models/Reactivos.js')
+const Reactivos = use('app/Models/Reactivos.js')
 class ReactivosController {
   store({ request }) {
     const {
@@ -13,7 +13,7 @@ class ReactivosController {
       fecha_creacion,
     } = request.all();
       
-    const reactivos = reactivos.create({
+    const reactivos = Reactivos.create({
       id,
       id_maestro,
       id_materia,

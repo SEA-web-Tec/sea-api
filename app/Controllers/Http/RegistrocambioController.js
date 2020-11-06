@@ -1,5 +1,5 @@
 "use strict";
-const Indicadorponderacion = use('app/Models/Registrocambio.js')
+const Registrocambio = use('app/Models/Registrocambio.js')
 class RegistrocambioController {
   store({ request }) {
     const {
@@ -7,7 +7,7 @@ class RegistrocambioController {
       id_instrumentaciondidactica,
     } = request.all();
       
-    const registrocambio = registrocambio.create({
+    const registrocambio = Registrocambio.create({
       fecha,
       id_instrumentaciondidactica,
     });
