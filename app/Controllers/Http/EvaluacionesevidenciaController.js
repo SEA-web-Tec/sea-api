@@ -1,5 +1,5 @@
 "use strict";
-const Indicadorponderacion = use('app/Models/Evaluacionesevidencias.js')
+const Evaluacionesevidencias = use('app/Models/Evaluacionesevidencias.js')
 class EvaluacionesevidenciasController {
   store({ request }) {
     const {
@@ -13,7 +13,7 @@ class EvaluacionesevidenciasController {
       id_evidencia_aprendizaje,
     } = request.all();
       
-    const evaluacionesevidencias = evaluacionesevidencias.create({
+    const evaluacionesevidencias = Evaluacionesevidencias.create({
         id,
         id_evidencia_aprendizaje,
         id_alumno,

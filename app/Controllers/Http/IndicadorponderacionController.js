@@ -8,7 +8,7 @@ class IndicadorponderacionController {
       ponderacion,
     } = request.all();
       
-    const indicadorponderacion = indicadorponderacion.create({
+    const indicadorponderacion = Indicadorponderacion.create({
       id_evidenciaaprendizaje,
       letra,
       ponderacion,
