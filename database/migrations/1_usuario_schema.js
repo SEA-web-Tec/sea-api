@@ -2,7 +2,7 @@
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use("Schema");
-
+// Cambiar tipo de dato a longtext Foto de perfil y Foto de portada
 class UsuarioSchema extends Schema {
   up() {
     this.create("usuarios", (table) => {
@@ -16,6 +16,8 @@ class UsuarioSchema extends Schema {
       table.string("Correo", 100).notNullable();
       table.string("CedulaProfesional", 100).notNullable();
       table.string("DepartamentoAcademico", 100).notNullable();
+      table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
+      table.text("FotoPortada", "longtext").nullable().defaultTo(null);
       table
         .enu("Sexo", ["MASCULINO", "FEMENINO"])
         .notNullable()
