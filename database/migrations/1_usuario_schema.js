@@ -13,7 +13,7 @@ class UsuarioSchema extends Schema {
       table.string("ApellidoMaterno", 50).notNullable();
       table.string("RFC", 13).notNullable();
       table.string("CURP", 18).notNullable();
-      table.string("Correo", 100).notNullable();
+      table.string("Correo", 100).notNullable().unique();
       table.string("CedulaProfesional", 100).notNullable();
       table.string("DepartamentoAcademico", 100).notNullable();
       table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
