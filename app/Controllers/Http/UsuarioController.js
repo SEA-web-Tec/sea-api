@@ -1,5 +1,5 @@
 "use strict";
-const Usuario = use('app/Models/Usuario.js')
+const Usuario = use('App/Models/Usuario')
 class UsuarioController {
   store({ request }) {
     const {
@@ -12,6 +12,7 @@ class UsuarioController {
       Correo,
       CedulaProfesional,
       DepartamentoAcademico,
+      user_type,
       Sexo,
       Estudios,
       contrasenia,
@@ -27,6 +28,7 @@ class UsuarioController {
       Correo,
       CedulaProfesional,
       DepartamentoAcademico,
+      user_type,
       Sexo,
       Estudios,
       contrasenia,
