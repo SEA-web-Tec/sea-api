@@ -33,6 +33,9 @@ class Usuario extends Model {
       tokens () {
         return this.hasMany('App/Models/Token')
       }
+      grupos () {
+        return this.hasMany('App/Models/Grupo')
+      }
 }
 
 module.exports = Usuario

@@ -8,7 +8,7 @@ class UsuarioSchema extends Schema {
     this.create("usuarios", (table) => {
       table.increments("id").primary();
       table.integer("NumeroEconomico", 11).notNullable().unique();
-      table.string("Nombre", 50).notNullable();
+      table.string("Nombre", 50).notNullable()
       table.string("ApellidoPaterno", 50).notNullable();
       table.string("ApellidoMaterno", 50).notNullable();
       table.string("RFC", 13).notNullable();
