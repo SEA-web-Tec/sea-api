@@ -19,9 +19,14 @@ const Route = use('Route')
 Route.on('/').render('welcome')
 
 Route.group( () => {
+    // Grupos
     Route.post('grupos/crear', 'GrupoController.store');
     
+    // Auth
     Route.post('auth/registrar', 'UsuarioController.store')
     Route.post('auth/login', 'UsuarioController.login')
+
+    //Materias
+    Route.post('materias/crear', 'MateriaController.store')
 
 }).prefix('api/v1/')

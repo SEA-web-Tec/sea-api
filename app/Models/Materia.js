@@ -4,9 +4,7 @@
 const Model = use('Model')
 
 class Materia extends Model {
-    grupo () {
-        return this.belongsTo('App/Models/Grupo')
-    }
+
 }
 
 module.exports = Materia
