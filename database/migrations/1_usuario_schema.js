@@ -14,6 +14,7 @@ class UsuarioSchema extends Schema {
       table.string("RFC", 13).notNullable();
       table.string("CURP", 18).notNullable();
       table.string("Correo", 100).notNullable().unique();
+      table.string("Grupos").nullable().defaultTo(null)
       table.string("CedulaProfesional", 100).notNullable();
       table.string("DepartamentoAcademico", 100).notNullable();
       table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
@@ -37,7 +38,7 @@ class UsuarioSchema extends Schema {
         ])
         .notNullable()
         .defaultTo("PENDIENTE");
-      table.integer("user_type", 1).notNullable();
+      table.integer("user_type").notNullable();
       table.string("contrasenia", 60).notNullable();
       table.timestamps();
     });

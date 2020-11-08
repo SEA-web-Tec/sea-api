@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Grupo extends Model {
     materia () {
-        return this.belongsTo('App/Models/Materia')
+        return this.hasMany('App/Models/Materia')
     }
 }
 
