@@ -21,6 +21,8 @@ Route.on('/').render('welcome')
 Route.group( () => {
     // Grupos
     Route.post('grupos/crear', 'GrupoController.store');
+    Route.get('grupos/consulta', 'GrupoController.index');
+
     
     // Auth
     Route.post('auth/registrar', 'UsuarioController.store')

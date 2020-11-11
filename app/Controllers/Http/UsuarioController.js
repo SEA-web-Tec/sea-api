@@ -7,6 +7,12 @@
  */
 const Usuario = use('App/Models/Usuario')
 class UsuarioController {
+  async login({ request, auth}) {
+    const { Correo, contrasenia } = request.all();
+    const token = await auth.attempt(Correo, contrasenia)
+    return token;
+  }
+  
   async store({ request, response, auth }) {
 
     //Solicitar informacion 

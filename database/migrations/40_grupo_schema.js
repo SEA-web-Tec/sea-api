@@ -8,7 +8,7 @@ class GrupoSchema extends Schema {
     this.create('grupos', (table) => {
       table.increments().primary()
       table.integer('materia_id').notNullable()
-      table.integer('maestro_id').notNullable()
+      table.integer('usuario_id').unsigned().references('id').inTable('usuarios')
       table.string('grupo', 1).notNullable()
       table.integer('anio', 11).notNullable().defaultTo(0)
       table.integer('periodo', 11).notNullable().defaultTo(0)
@@ -17,7 +17,7 @@ class GrupoSchema extends Schema {
       table.integer('id_profesor_evaluador').unsigned().notNullable()
       table.datetime('fecha_cambio').notNullable()
 
-      // table.foreign('maestro').references('Nombre').inTable('usuarios')
+      // table.foreign('maestro_id', ['fk_grupos_usuarios'] ).references('id').inTable('usuarios')
       
       table.timestamps()
     })
