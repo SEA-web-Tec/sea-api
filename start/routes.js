@@ -21,7 +21,7 @@ Route.on('/').render('welcome')
 Route.group( () => {
     // Grupos
     Route.post('grupos/crear', 'GrupoController.store');
-    Route.get('grupos/consulta', 'GrupoController.index');
+    Route.get('grupos/consulta', 'GrupoController.index').middleware('auth');
 
     
     // Auth
