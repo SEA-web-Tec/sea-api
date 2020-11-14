@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -7,87 +7,45 @@
 /**
  * Resourceful controller for interacting with temarios
  */
+const Temario = use("App/Models/Temario");
+
 class TemarioController {
-  /**
-   * Show a list of all temarios.
-   * GET temarios
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  //buscar indice
+  async index({ request }) {
+    const materia_id = request.all();
+    return await Temario.query().where("id", materia_id.id).fetch();
   }
 
-  /**
-   * Render a form to be used for creating a new temario.
-   * GET temarios/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  //crear
+  async create({ request, response, view }) {}
+
+  //guardar
+  async store({ request, response }) {
+    const info = request.all();
+
+    const date = new Date();
+    const temario = await Temario.create({
+      id: info.id,
+      tema: info.tema,
+      subtema: info.subtema,
+      descripcion: info.descripcion,
+      objetivos: info.objetivos,
+      competencias: info.competencias,
+      actividadesDeAprendizaje: info.actividadesDeAprendizaje,
+    });
+    return response.json({
+      message: "Se creo la unidad del temario exitosamente",
+      Temario: temario,
+    });
   }
 
-  /**
-   * Create/save a new temario.
-   * POST temarios
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
+  async show({ params, request, response, view }) {}
 
-  /**
-   * Display a single temario.
-   * GET temarios/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+  async edit({ params, request, response, view }) {}
 
-  /**
-   * Render a form to update an existing temario.
-   * GET temarios/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async update({ params, request, response }) {}
 
-  /**
-   * Update temario details.
-   * PUT or PATCH temarios/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a temario with id.
-   * DELETE temarios/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
-  }
+  async destroy({ params, request, response }) {}
 }
 
-module.exports = TemarioController
+module.exports = TemarioController;

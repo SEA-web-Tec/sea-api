@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Temario extends Model {
+  materia() {
+    return this.hasOne("App/Models/Materia");
+  }
 }
 
 module.exports = Temario

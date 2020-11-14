@@ -8,15 +8,25 @@ class UsuarioSchema extends Schema {
     this.create("usuarios", (table) => {
       table.increments().primary();
       table.integer("NumeroEconomico", 11).notNullable().unique();
-      table.string("Nombre", 50).notNullable()
+      table.string("Nombre", 50).notNullable();
       table.string("ApellidoPaterno", 50).notNullable();
       table.string("ApellidoMaterno", 50).notNullable();
       table.string("RFC", 13).notNullable();
       table.string("CURP", 18).notNullable();
       table.string("Correo", 100).notNullable().unique();
-      table.string("Grupos").nullable().defaultTo(null)
+      table.string("Grupos").nullable().defaultTo(null);
       table.string("CedulaProfesional", 100).notNullable();
-      table.string("DepartamentoAcademico", 100).notNullable();
+      table
+        .enu("DepartamentoAcademico", [
+          "Departamento de Ciencias Basicas",
+          "Departamento de Ciencias Economico Administrativas",
+          "Departamento de Ciencias de la Tierra",
+          "Departamento de Ingenierias",
+          "Departamento de Metal-Mecanica",
+          "Departamento de Sistemas y Computación",
+        ])
+        .notNullable()
+        .defaultTo("Departamento de Ciencias Basicas");
       table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
       table.text("FotoPortada", "longtext").nullable().defaultTo(null);
       table
