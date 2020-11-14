@@ -13,12 +13,9 @@ class GrupoSchema extends Schema {
       table.integer('anio', 11).notNullable().defaultTo(0)
       table.integer('periodo', 11).notNullable().defaultTo(0)
       table.enu('gestion_del_curso', ['abierta', 'entregada', 'aprobada']).notNullable().defaultTo('abierta')
-      table.integer('id_intrumentaciondidactica').unsigned().notNullable()
+      table.integer('id_intrumentaciondidactica').unsigned().nullable()
       table.integer('id_profesor_evaluador').unsigned().notNullable()
-      table.datetime('fecha_cambio').notNullable()
-
-      // table.foreign('maestro').references('Nombre').inTable('usuarios')
-      
+      table.datetime('fecha_cambio').notNullable()      
       table.timestamps()
     })
   }

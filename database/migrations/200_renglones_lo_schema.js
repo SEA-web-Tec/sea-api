@@ -7,16 +7,10 @@ class RenglonesLoSchema extends Schema {
   up() {
     this.create("renglones_lo", (table) => {
       table.increments("id").primary().notNullable().unsigned();
-      table.integer("num_renglon").notNullable();
-      table
-        .integer("id_observacion")
-        .notNullable()
-        .unsigned()
-        .references("id")
-        .inTable("listas_de_observacion");
+      table.specificType("numrenglon", "TINYINT").notNullable();
+      table.integer("id_observacion").notNullable().unsigned();
       table.text("criterio").notNullable();
-      table.integer("ponderacion").notNullable().unsigned();
-      table.index("id_observacion").notNullable();
+      table.integer("puntos").notNullable().unsigned();
       table.timestamps();
     });
   }

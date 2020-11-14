@@ -24,9 +24,6 @@ class MateriaSchema extends Schema {
       table.text('competencias_genericas').notNullable()
       table.text('competencias_previas').notNullable()
       table.text('bibliografia').notNullable()
-
- 
-
       table.timestamps()
     })
   }

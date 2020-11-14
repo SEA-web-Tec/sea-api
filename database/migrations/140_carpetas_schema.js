@@ -11,13 +11,10 @@ class CarpetasSchema extends Schema {
     this.create('carpetas', (table) => {
       table.increments('id').primary().unsigned()
       table.string('nombre', 80).notNullable()
-      table.integer('id_usuario').notNullable().unsigned().references('id').inTable('usuarios')
-      table.integer('id_carpeta_padre').notNullable().unsigned().references('id').inTable('carpetas_padres')
+      table.integer('id_usuario').notNullable()
+      table.integer('id_carpeta_padre').notNullable()
       table.datetime('fecha_creacion').notNullable()
       table.datetime('fecha_modificacion').notNullable()
-
-      table.index('id_carpeta_padre').notNullable()
-      
       table.timestamps()
     })
   }

@@ -14,10 +14,6 @@ class CeldaSchema extends Schema {
       table.integer('id_renglon').notNullable().unsigned().references('id').inTable('renglones')
       table.integer('id_columna').notNullable().unsigned().references('id').inTable('columnas')
       table.integer('puntos_maximos').notNullable()
-
-      table.index('id_columna')
-      table.index('id_renglon')
-
       table.timestamps()
     })
   }

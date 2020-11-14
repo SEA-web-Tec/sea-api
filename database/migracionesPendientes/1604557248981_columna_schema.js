@@ -13,9 +13,6 @@ class ColumnaSchema extends Schema {
       table.integer('titulo', 20).notNullable()
       table.integer('num_columna').notNullable()
       table.integer('id_instrumento').notNullable().references('id').inTable('instrumentos')
-
-      table.index('id_instrumento')
-
       table.timestamps()
     })
   }

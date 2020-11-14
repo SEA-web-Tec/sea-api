@@ -6,9 +6,9 @@ const Schema = use('Schema')
 class CalendarizacionesSchema extends Schema {
   up () {
     this.create('calendarizaciones', (table) => {
-      table.integer('id_evidencia_aprendizaje').notNullable().primary()
+      table.increments("id").notNullable().primary();
       table.string('instrucciones').notNullable()
-      table.boolean('es_por_equipo').notNullable()
+      //table.boolean('es_por_equipo').notNullable()
       table.datetime('fecha_subida1ra').notNullable()
       table.datetime('fecha_subida2da').notNullable()
       table.datetime('fecha_limite1ra').notNullable()

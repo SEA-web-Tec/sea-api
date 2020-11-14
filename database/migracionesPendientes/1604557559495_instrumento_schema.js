@@ -18,10 +18,6 @@ class InstrumentoSchema extends Schema {
       table.integer('vista_previa').notNullable().defaultTo(0)
       table.integer('tiene_observaciones').notNullable().defaultTo(1)
       table.integer('tiene_comentario_final').notNullable().defaultTo(0)
-
-      table.index('id_carpeta')
-
-
       table.timestamps()
     })
   }

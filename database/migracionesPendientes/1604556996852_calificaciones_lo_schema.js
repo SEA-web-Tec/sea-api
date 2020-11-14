@@ -20,7 +20,6 @@ class CalificacionesLoSchema extends Schema {
         .inTable("evaluaciones_evidencia");
       table.integer("ponderacion").unsigned().notNullable();
       table.text("observaciones").nullable().defaultTo(null);
-      table.index("id_evaluacion_evidencia");
       table.timestamps();
 
       table.primary(["id_renglon_lo", "id_evaluacion_evidencia"]);

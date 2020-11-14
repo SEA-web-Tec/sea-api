@@ -8,22 +8,17 @@ class InstrumentaciondidacticaunidadSchema extends Schema {
     this.create("instrumentaciondidacticaunidad", (table) => {
       table.increments("id");
       table.integer("id_instrumentaciondidactica").unsigned();
-      table.integer("unidad").defaultTo("0");
-      table.text("actividades_aprendizaje");
-      table.text("actividades_enseñanza");
-      table.text("desarrollo_competencias_genericas");
-      table.text("material_apoyo");
+      table.integer("unidad").defaultTo("1");
+      table.text("actividades_aprendizaje").notNullable();
+      table.text("actividades_enseñanza").notNullable();
+      table.text("desarrollo_competencias_genericas").notNullable();
+      table.text("material_apoyo").notNullable();
       table.integer("semana_clases").defaultTo("0");
       table.integer("semana_evaluacion").defaultTo("0");
-      table.text("comentario");
-      table
-        .text("id_indicadores_alcance")
-        .unsigned()
-        .references("id")
-        .inTable("indicadoresalcance");
-      table.primary("id_instrumentaciondidactica", "unidad", [
+      table.text("comentario").nullable();
+      /*table.primary("id_instrumentaciondidactica", "unidad", [
         "pk_instrumentaciondidacticaunidad",
-      ]);
+      ]);*/
       table.timestamps();
     });
   }

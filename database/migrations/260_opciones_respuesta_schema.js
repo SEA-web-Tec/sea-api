@@ -6,12 +6,11 @@ const Schema = use("Schema");
 class OpcionesRespuestaSchema extends Schema {
   up() {
     this.create("opciones_respuesta", (table) => {
-      table.increments("id");
-      table.integer("id_reactivo").unsigned();
-      table.text("texto_opcion").unsigned();
-      table.boolean("es_correcta").nullable().defaultTo(null);
-      table.string("identificador", 2).nullable().defaultTo(null);
-      table.index("id_reactivo").references("id_reactivo").inTable("reactivos");
+      table.increments("id").primary();
+      table.integer("id_reactivo").notNullable().unsigned();
+      table.text("texto_opcion").notNullable();
+      table.boolean("es_correcta").nullable().defaultTo('1');
+      table.string("identificador", 2).nullable();
       table.timestamps();
     });
   }

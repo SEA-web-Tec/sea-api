@@ -19,7 +19,6 @@ class CalificacionesLcSchema extends Schema {
         .references("id")
         .inTable("evaluaciones_evidencia");
       table.boolean("satisface").defaultTo("0");
-      table.index("id_evaluacion_evidencia");
       table.timestamps();
 
       $table.primary(["id_renglon_lc", "id_evaluacion_evidencia"]);

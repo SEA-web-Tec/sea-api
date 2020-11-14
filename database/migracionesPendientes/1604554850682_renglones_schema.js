@@ -12,9 +12,6 @@ class RenglonesSchema extends Schema {
       table.string('criterio', 50).notNullable()
       table.integer('num_renglon').notNullable()
       table.integer('id_instrumento').notNullable().unsigned().references('id').inTable('instrumentos')
-
-      table.index('id_instrumento').notNullable()
-
       table.timestamps()
     })
   }
