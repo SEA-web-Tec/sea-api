@@ -26,7 +26,7 @@ class UsuarioSchema extends Schema {
           "Departamento de Sistemas y Computación",
         ])
         .notNullable()
-        .defaultTo("calificacion mas alta");
+        .defaultTo("Departamento de Ciencias Basicas");
       table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
       table.text("FotoPortada", "longtext").nullable().defaultTo(null);
       table
