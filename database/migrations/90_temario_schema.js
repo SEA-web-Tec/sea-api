@@ -6,8 +6,7 @@ const Schema = use("Schema");
 class TemarioSchema extends Schema {
   up() {
     this.create("temarios", (table) => {
-      table.increments();
-      table.string("materia").notNullable();
+      table.integer("id").notNullable();
       table.integer("tema").notNullable().defaultTo("0");
       table.integer("subtema").notNullable().defaultTo("0");
       table.text("descripcion").notNullable();

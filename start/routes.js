@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -14,21 +14,23 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use("Route");
 
-Route.on('/').render('welcome')
+Route.on("/").render("welcome");
 
-Route.group( () => {
-    // Grupos
-    Route.post('grupos/crear', 'GrupoController.store');
-    Route.get('grupos/consulta', 'GrupoController.index').middleware('auth');
+Route.group(() => {
+  // Grupos
+  Route.post("grupos/crear", "GrupoController.store").middleware("auth");
+  Route.get("grupos/consulta", "GrupoController.index").middleware("auth");
 
-    
-    // Auth
-    Route.post('auth/registrar', 'UsuarioController.store')
-    Route.post('auth/login', 'UsuarioController.login')
+  // Auth
+  Route.post("auth/registrar", "UsuarioController.store");
+  Route.post("auth/login", "UsuarioController.login").middleware("auth");
 
-    //Materias
-    Route.post('materias/crear', 'MateriaController.store')
+  //Materias
+  Route.post("materias/crear", "MateriaController.store").middleware("auth");
 
-}).prefix('api/v1/')
+  //Temario
+  Route.post("temario/crear", "TemarioController.store");
+  Route.get("temario/consulta", "TemarioController.index");
+}).prefix("api/v1/");
