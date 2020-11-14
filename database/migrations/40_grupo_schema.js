@@ -8,7 +8,7 @@ class GrupoSchema extends Schema {
     this.create('grupos', (table) => {
       table.increments().primary()
       table.integer('materia_id').notNullable()
-      table.integer('maestro_id').notNullable()
+      table.integer('usuario_id').unsigned().references('id').inTable('usuarios')
       table.string('grupo', 1).notNullable()
       table.integer('anio', 11).notNullable().defaultTo(0)
       table.integer('periodo', 11).notNullable().defaultTo(0)
