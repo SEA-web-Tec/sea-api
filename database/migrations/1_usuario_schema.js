@@ -7,7 +7,7 @@ class UsuarioSchema extends Schema {
   up() {
     this.create("usuarios", (table) => {
       table.increments().primary();
-      table.integer("numeroEconomico", 11).notNullable().unique();
+      table.bigInteger("numeroEconomico", 11).notNullable().unique();
       table.string("nombre", 50).notNullable();
       table.string("apellidoPaterno", 50).notNullable();
       table.string("apellidoMaterno", 50).notNullable();
@@ -15,18 +15,18 @@ class UsuarioSchema extends Schema {
       table.string("curp", 18).notNullable();
       table.string("correo", 100).notNullable().unique();
       table.string("grupos").nullable().defaultTo(null);
-      table.string("cedulaProfesional", 100).notNullable();
+      table.string("cedulaProfesional", 8).notNullable();
       table
         .enu("departamentoAcademico", [
-          "Departamento de Ciencias Basicas",
-          "Departamento de Ciencias Economico Administrativas",
-          "Departamento de Ciencias de la Tierra",
-          "Departamento de Ingenierias",
-          "Departamento de Metal-Mecanica",
-          "Departamento de Sistemas y Computación",
+          "DEPARTAMENTO DE CIENCIAS BASICAS",
+          "DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS",
+          "DEPARTAMENTO DE CIENCIAS DE LA TIERRA",
+          "DEPARTAMENTO DE INGENIERIAS",
+          "DEPARTAMENTO DE METAL-MECANICA",
+          "DEPARTAMENTO DE SISTEMAS Y COMPUTACIÓN",
         ])
         .notNullable()
-        .defaultTo("Departamento de Ciencias Basicas");
+        .defaultTo("DEPARTAMENTO DE CIENCIAS BASICAS");
       table.text("fotoPerfil", "longtext").nullable().defaultTo(null);
       table.text("fotoPortada", "longtext").nullable().defaultTo(null);
       table
