@@ -19,7 +19,16 @@ class UsuarioController {
             var res = {}
             const token = await auth.generate(user)
             res.token = token.token
-            res.user = user
+            res.user = {
+              id: user.id,
+              nombres: user.nombre,
+              apellidoPaterno: user.apellidoPaterno,
+              apellidoMaterno: user.apellidoMaterno,
+              correo: user.correo,
+              fotoPerfil: user.fotoPerfil,
+              fotoPortada: user.fotoPortada,
+              sexo: user.sexo
+            }
             return response.status(200).json(res)
         }
         return response.status(401).json({
