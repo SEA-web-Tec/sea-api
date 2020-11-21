@@ -5,6 +5,7 @@
  * @param {Request} ctx.request
  * @param {Response} ctx.response
  */
+const Hash = use('Hash')
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
   async login({ request, response, auth }) {
@@ -27,6 +28,7 @@ class UsuarioController {
 
     }
     } catch (err) {
+      console.log(err)
       return response.status(err.status).json({ message: err.message })
     }
   }
