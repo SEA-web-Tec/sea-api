@@ -7,10 +7,28 @@
  */
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
-  async login({ request, auth }) {
-    const { correo, contrasenia } = request.all();
-    const token = await auth.attempt(correo, contrasenia);
-    return token;
+  async login({ request, response, auth }) {
+    try {
+      const { correo, contrasenia } = request.all()
+      var user = await Usuario.query().where({ correo: correo.toLowerCase() }).first()
+      if (user) {
+        const passwordVerified = await Hash.verify(contrasenia, user.contrasenia)
+
+        if (passwordVerified) {
+            var res = {}
+            const token = await auth.generate(user)
+            res.token = token.token
+            res.user = user
+            return response.status(200).json(res)
+        }
+        return response.status(401).json({
+            message: 'No ha sido posible verificar sus credenciales. El correo o la contraseña no coinciden.',
+        })
+
+    }
+    } catch (err) {
+      return response.status(err.status).json({ message: err.message })
+    }
   }
 
   async signup({ request, response, auth }) {
