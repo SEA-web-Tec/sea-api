@@ -6,7 +6,11 @@ const Schema = use("Schema");
 class InstrumentaciondidacticaunidadSchema extends Schema {
   up() {
     this.create("instrumentaciondidacticaunidad", (table) => {
-      table.integer("id_instrumentaciondidactica").unsigned();
+      table
+        .integer("id_ins")
+        .unsigned()
+        .references("id")
+        .inTable("instrumentaciondidacticas");
       table.integer("unidad").defaultTo("1");
       table.text("actividades_aprendizaje").notNullable();
       table.text("actividades_enseñanza").notNullable();
@@ -23,7 +27,7 @@ class InstrumentaciondidacticaunidadSchema extends Schema {
   }
 
   down() {
-    this.drop("instrumentaciondidacticaunidad");
+    this.drop("instrumentaciondidacticaunidads");
   }
 }
 

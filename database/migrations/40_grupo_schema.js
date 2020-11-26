@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class GrupoSchema extends Schema {
   up () {
     this.create('grupos', (table) => {
-      table.increments().primary()
+      table.increments('id').primary()
       table.integer('materia_id').notNullable()
       table.integer('usuario_id').unsigned().references('id').inTable('usuarios')
       table.string('grupo', 1).notNullable()

@@ -7,8 +7,12 @@ class InstrumentaciondidacticaSchema extends Schema {
   up() {
     this.create("instrumentaciondidacticas", (table) => {
       table.increments("id");
-      table.integer("id_temario").notNullable().defaultTo(0);
-      table.integer("id_usuario").notNullable().defaultTo(0);
+      table.integer("grupo_id").unsigned().references("id").inTable("grupos");
+      table
+        .integer("usuario_id")
+        .unsigned()
+        .references("id")
+        .inTable("usuarios");
       table.timestamps();
     });
   }

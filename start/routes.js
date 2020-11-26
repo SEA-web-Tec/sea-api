@@ -33,4 +33,26 @@ Route.group(() => {
   //Temario
   Route.post("temario/crear", "TemarioController.store");
   Route.get("temario/consulta", "TemarioController.index");
+
+  //Indicadores de alcence de ID
+  Route.post("indicadoresalcance/crear", "IndicadoresalcanceController.store");
+  Route.get(
+    "indicadoresalcance/consulta",
+    "IndicadoresalcanceController.index"
+  );
+  Route.put("indicadoresalcance/editar", "IndicadoresalcanceController.update");
+
+  //ID para crear, consultar y buscar completos
+  Route.post(
+    "instrumentaciondidactica/crear",
+    "InstrumentaciondidacticaController.store"
+  );
+  Route.get(
+    "instrumentaciondidactica/consulta",
+    "InstrumentaciondidacticaController.index"
+  );
+  Route.get(
+    "instrumentaciondidactica/intrumentacion_completa",
+    "InstrumentaciondidacticaController.intrumentacion_completa"
+  );
 }).prefix("api/v1/");

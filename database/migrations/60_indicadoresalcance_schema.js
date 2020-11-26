@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class IndicadoresalcanceSchema extends Schema {
   up() {
-    this.create("indicadoresalcance", (table) => {
+    this.create("indicadoresalcances", (table) => {
       table.increments('id').primary();
       table.string("A", 100).defaultTo(" ");
       table.string("B", 100).defaultTo(" ");
@@ -38,7 +38,7 @@ class IndicadoresalcanceSchema extends Schema {
   }
 
   down() {
-    this.drop("indicadoresalcance");
+    this.drop("indicadoresalcances");
   }
 }
 

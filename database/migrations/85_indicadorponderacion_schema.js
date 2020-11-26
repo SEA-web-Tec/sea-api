@@ -6,7 +6,11 @@ const Schema = use("Schema");
 class IndicadorponderacionSchema extends Schema {
   up() {
     this.create("indicadorponderacion", (table) => {
-      table.integer("id_evidenciaaprendizaje").unsigned();
+      table
+        .integer("id_evidenciaaprendizaje")
+        .unsigned()
+        .references("id")
+        .inTable("evidenciasaprendizaje");
       table.string("letra", 1).notNullable().defaultTo("A");
       table.specificType("ponderacion", "TINYINT").notNullable().defaultTo("0");
       /*table.primary("id_evidenciaaprendizaje", "letra", [
