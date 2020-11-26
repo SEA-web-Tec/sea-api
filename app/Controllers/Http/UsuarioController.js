@@ -5,47 +5,101 @@
  * @param {Request} ctx.request
  * @param {Response} ctx.response
  */
-const Usuario = use('App/Models/Usuario')
+const Hash = use('Hash')
+const Usuario = use("App/Models/Usuario");
 class UsuarioController {
-  async login({ request, auth}) {
-    const { Correo, contrasenia } = request.all();
-    const token = await auth.attempt(Correo, contrasenia)
-    return token;
+  async login({ request, response, auth }) {
+    try {
+      const { correo, contrasenia } = request.all()
+      var user = await Usuario.query().where({ correo: correo.toLowerCase() }).first()
+      if (user) {
+        const passwordVerified = await Hash.verify(contrasenia, user.contrasenia)
+
+        if (passwordVerified) {
+            var res = {}
+            const token = await auth.generate(user)
+            res.token = token.token
+            res.user = {
+              id: user.id,
+              nombres: user.nombre,
+              apellidoPaterno: user.apellidoPaterno,
+              apellidoMaterno: user.apellidoMaterno,
+              correo: user.correo,
+              fotoPerfil: user.fotoPerfil,
+              fotoPortada: user.fotoPortada,
+              sexo: user.sexo
+            }
+            return response.status(200).json(res)
+        }
+        return response.status(401).json({
+            message: 'No ha sido posible verificar sus credenciales. El correo o la contraseña no coinciden.',
+        })
+
+    }
+    } catch (err) {
+      console.log(err)
+      return response.status(err.status).json({ message: err.message })
+    }
   }
-  
-  async store({ request, response, auth }) {
 
-    //Solicitar informacion 
-    const info =  request.all()
-      
-    //Creacion del usuario
-    const usuario = await Usuario.create({
-      numeroEconomico: info.NumeroEconomico,
-      nombre: info.Nombre,
-      apellidoPaterno: info.ApellidoPaterno,
-      apellidoMaterno: info.ApellidoMaterno,
-      rfc: info.RFC,
-      curp: info.CURP,
-      correo: info.Correo,
-      cedulaProfesional: info.CedulaProfesional,
-      departamentoAcademico: info.DepartamentoAcademico,
-      fotoPerfil: info.FotoPerfil,
-      fotoPortada: info.FotoPortada,
-      user_type: 2,
-      sexo: info.Sexo,
-      estudios: info.Estudios,
-      contrasenia: info.contrasenia,
-    });
+  async signup({ request, response, auth }) {
+    try {
+      //Solicitar informacion
+      const info = request.all();
 
-    // Conseguir el token del usuario
-    const token = await auth.attempt(info.Correo, info.contrasenia)
+      const numeroEconomicoExists = await Usuario.query()
+        .where("numeroEconomico", info.numeroEconomico)
+        .first();
 
-    // Respuesta para el usuario
-    return response.json({
-      message: "Usuario registrado exitosamente",
-      token: token.token,
-      Usuario: usuario
-    })
+      const correoExists = await Usuario.query()
+        .where("correo", info.correo.toLowerCase())
+        .first();
+
+      if (numeroEconomicoExists) {
+        throw {
+          message:
+            "No se creó la cuenta porque ya existe un usuario con ese número económico.",
+        };
+      } else if (correoExists) {
+        throw {
+          message:
+            "No se creó la cuenta porque ya existe un usuario con ese correo.",
+        };
+      }
+
+      //Creacion del usuario
+      const usuario = await Usuario.create({
+        numeroEconomico: info.numeroEconomico,
+        nombre: info.nombre,
+        apellidoPaterno: info.apellidoPaterno,
+        apellidoMaterno: info.apellidoMaterno,
+        rfc: info.rfc,
+        curp: info.curp,
+        correo: info.correo,
+        cedulaProfesional: info.cedulaProfesional,
+        departamentoAcademico: info.departamentoAcademico,
+        fotoPerfil: info.fotoPerfil,
+        fotoPortada: info.fotoPortada,
+        user_type: 2,
+        sexo: info.sexo,
+        estudios: info.estudios,
+        contrasenia: info.contrasenia,
+      });
+
+      // Conseguir el token del usuario
+      const token = await auth.attempt(info.correo, info.contrasenia);
+
+      // Respuesta para el usuario
+      return response.status(201).json({
+        message: "Usuario registrado exitosamente!",
+        token: token.token,
+        Usuario: usuario,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
+    }
   }
 }
 

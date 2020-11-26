@@ -24,8 +24,8 @@ Route.group(() => {
   Route.get("grupos/consulta", "GrupoController.index").middleware("auth");
 
   // Auth
-  Route.post("auth/registrar", "UsuarioController.store");
-  Route.post("auth/login", "UsuarioController.login").middleware("auth");
+  Route.post("auth/registrar", "UsuarioController.signup");
+  Route.post("auth/login", "UsuarioController.login")
 
   //Materias
   Route.post("materias/crear", "MateriaController.store").middleware("auth");

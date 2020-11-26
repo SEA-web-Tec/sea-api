@@ -7,34 +7,34 @@ class UsuarioSchema extends Schema {
   up() {
     this.create("usuarios", (table) => {
       table.increments().primary();
-      table.integer("NumeroEconomico", 11).notNullable().unique();
-      table.string("Nombre", 50).notNullable();
-      table.string("ApellidoPaterno", 50).notNullable();
-      table.string("ApellidoMaterno", 50).notNullable();
-      table.string("RFC", 13).notNullable();
-      table.string("CURP", 18).notNullable();
-      table.string("Correo", 100).notNullable().unique();
-      table.string("Grupos").nullable().defaultTo(null);
-      table.string("CedulaProfesional", 100).notNullable();
+      table.bigInteger("numeroEconomico", 11).notNullable().unique();
+      table.string("nombre", 50).notNullable();
+      table.string("apellidoPaterno", 50).notNullable();
+      table.string("apellidoMaterno", 50).notNullable();
+      table.string("rfc", 13).notNullable();
+      table.string("curp", 18).notNullable();
+      table.string("correo", 100).notNullable().unique();
+      table.string("grupos").nullable().defaultTo(null);
+      table.string("cedulaProfesional", 8).notNullable();
       table
-        .enu("DepartamentoAcademico", [
-          "Departamento de Ciencias Basicas",
-          "Departamento de Ciencias Economico Administrativas",
-          "Departamento de Ciencias de la Tierra",
-          "Departamento de Ingenierias",
-          "Departamento de Metal-Mecanica",
-          "Departamento de Sistemas y Computación",
+        .enu("departamentoAcademico", [
+          "DEPARTAMENTO DE CIENCIAS BASICAS",
+          "DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS",
+          "DEPARTAMENTO DE CIENCIAS DE LA TIERRA",
+          "DEPARTAMENTO DE INGENIERIAS",
+          "DEPARTAMENTO DE METAL-MECANICA",
+          "DEPARTAMENTO DE SISTEMAS Y COMPUTACIÓN",
         ])
         .notNullable()
-        .defaultTo("Departamento de Ciencias Basicas");
-      table.text("FotoPerfil", "longtext").nullable().defaultTo(null);
-      table.text("FotoPortada", "longtext").nullable().defaultTo(null);
+        .defaultTo("DEPARTAMENTO DE CIENCIAS BASICAS");
+      table.text("fotoPerfil", "longtext").nullable().defaultTo(null);
+      table.text("fotoPortada", "longtext").nullable().defaultTo(null);
       table
-        .enu("Sexo", ["MASCULINO", "FEMENINO"])
+        .enu("sexo", ["MASCULINO", "FEMENINO"])
         .notNullable()
         .defaultTo("MASCULINO");
       table
-        .enu("Estudios", [
+        .enu("estudios", [
           "PENDIENTE",
           "PRIMARIA",
           "SECUNDARIA",
