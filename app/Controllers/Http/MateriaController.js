@@ -16,6 +16,7 @@ class MateriaController {
       semestre: info.semestre,
       plan: info.plan,
       id_temario: info.id_temario,
+      unidades: info.unidades,
       modulo: info.modulo,
       creditos_requeridos: info.creditos_requeridos,
       objetivo: info.objetivo,

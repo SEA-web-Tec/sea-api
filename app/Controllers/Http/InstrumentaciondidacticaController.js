@@ -1,52 +1,44 @@
 "use strict";
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with instrumentaciondidacticas
- */
 const Instrumentaciondidactica = use("App/Models/Instrumentaciondidactica");
-class InstrumentaciondidacticaController {
-  async index({ request }) {
-    const info = request.all();
-    return await Instrumentaciondidactica.query()
-      .where(
-        "grupo_id",
-        "=",
-        info.grupo_id,
-        "&&",
-        "usuario_id",
-        "=",
-        info.usuario_id
-      )
-      .fetch();
-  }
+const Grupo = use("App/Models/Grupo");
+const Materia = use("App/Models/Materia");
 
-  async intrumentacion_completa({ request }) {
+class InstrumentaciondidacticaController {
+  async index({ request, response }) {
     const info = request.all();
-    const intrumentacion = await Instrumentaciondidactica.query().where(
-      "grupo_id",
-      "=",
-      info.grupo_id,
-      "&&",
-      "usuario_id",
-      "=",
-      info.usuario_id
-    );
-    return intrumentacion.instrumentaciondidacticaunidad().fetch();
+    await Instrumentaciondidactica.query()
+      .where("grupo_id", info.grupo_id)
+      .andWhere("usuario_id", info.usuario_id)
+      .fetch();
+    await Grupo.query().where("id", info.grupo_id).fetch();
   }
 
   async store({ request, response }) {
     const info = request.all();
-    const datos = await Instrumentaciondidactica.create({
-      materia_id: info.materia_id,
-      usuario_id: info.usuario_id,
-    });
+
+    const elemento = await Instrumentaciondidactica.query()
+      .where("grupo_id", info.grupo_id)
+      .andWhere("usuario_id", info.usuario_id)
+      .fetch();
+    if (JSON.stringify(elemento) == "[]") {
+      await Instrumentaciondidactica.create({
+        grupo_id: info.grupo_id,
+        usuario_id: info.usuario_id,
+      });
+    }
+    const intrumentacion = await Instrumentaciondidactica.query()
+      .where("grupo_id", info.grupo_id)
+      .andWhere("usuario_id", info.usuario_id)
+      .fetch();
+    const grupo = await Grupo.query().where("id", info.grupo_id).fetch();
+    const materia = await Materia.query()
+      .where("id", grupo.toJSON()[0].materia_id)
+      .fetch();
+
     return response.json({
-      message: "Se el id de Ins Dic exitosamente",
-      Instrumentaciondidactica: datos,
+      intrumentacion: intrumentacion,
+      unidades: materia.toJSON()[0].unidades,
     });
   }
 

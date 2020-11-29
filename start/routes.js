@@ -25,7 +25,7 @@ Route.group(() => {
 
   // Auth
   Route.post("auth/registrar", "UsuarioController.signup");
-  Route.post("auth/login", "UsuarioController.login")
+  Route.post("auth/login", "UsuarioController.login");
 
   //Materias
   Route.post("materias/crear", "MateriaController.store").middleware("auth");
@@ -54,5 +54,28 @@ Route.group(() => {
   Route.get(
     "instrumentaciondidactica/intrumentacion_completa",
     "InstrumentaciondidacticaController.intrumentacion_completa"
+  );
+
+  //ID para crear, consultar y buscar completos
+  Route.post(
+    "instrumentaciondidacticaunidad/crear",
+    "InstrumentaciondidacticaunidadController.store"
+  );
+  Route.get(
+    "instrumentaciondidacticaunidad/consulta",
+    "InstrumentaciondidacticaunidadController.index"
+  );
+  Route.get(
+    "instrumentaciondidacticaunidad/editar",
+    "InstrumentaciondidacticaunidadController.update"
+  );
+
+  Route.post(
+    "evidenciasaprendizaje/crear",
+    "EvidenciasaprendizajeController.store"
+  );
+  Route.get(
+    "evidenciasaprendizaje/consulta",
+    "EvidenciasaprendizajeController.index"
   );
 }).prefix("api/v1/");

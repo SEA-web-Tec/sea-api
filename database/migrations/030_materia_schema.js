@@ -16,7 +16,7 @@ class MateriaSchema extends Schema {
       table.integer("semestre").notNullable().defaultTo(1);
       table.integer("plan").notNullable().defaultTo(0);
       table.integer("id_temario").notNullable().defaultTo(0);
-      table.integer("unidades").unsigned().notNullable();
+      table.integer("unidades").unsigned().notNullable().defaultTo(0);
       table.integer("modulo", 11).notNullable().defaultTo(0);
       table.integer("creditos_requeridos", 11).notNullable().defaultTo(0);
       table.string("objetivo", 1000).notNullable();

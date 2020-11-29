@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class EvidenciasaprendizajeSchema extends Schema {
   up() {
-    this.create("evidenciasaprendizaje", (table) => {
+    this.create("evidenciasaprendizajes", (table) => {
       table.increments("id").primary();
       table.string("nombre", 50).notNullable();
       table.specificType("ponderacion", "TINYINT").notNullable().defaultTo("0");
@@ -28,14 +28,14 @@ class EvidenciasaprendizajeSchema extends Schema {
         .integer("id_ins")
         .unsigned()
         .references("id_ins")
-        .inTable("instrumentaciondidacticaunidad");
+        .inTable("instrumentaciondidacticaunidads");
       table.integer("unidad", 2).notNullable().defaultTo("1");
       table.timestamps();
     });
   }
 
   down() {
-    this.drop("evidenciasaprendizaje");
+    this.drop("evidenciasaprendizajes");
   }
 }
 

@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class InstrumentaciondidacticaunidadSchema extends Schema {
   up() {
-    this.create("instrumentaciondidacticaunidad", (table) => {
+    this.create("instrumentaciondidacticaunidads", (table) => {
       table
         .integer("id_ins")
         .unsigned()
