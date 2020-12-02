@@ -8,7 +8,7 @@ class UsuarioSchema extends Schema {
     this.create("usuarios", (table) => {
       table.increments().primary();
       table.bigInteger("numeroEconomico", 11).notNullable().unique();
-      table.string("nombre", 50).notNullable();
+      table.string("nombres", 50).notNullable();
       table.string("apellidoPaterno", 50).notNullable();
       table.string("apellidoMaterno", 50).notNullable();
       table.string("rfc", 13).notNullable();
@@ -48,7 +48,7 @@ class UsuarioSchema extends Schema {
         ])
         .notNullable()
         .defaultTo("PENDIENTE");
-      table.integer("user_type").notNullable();
+      table.integer("userType").notNullable();
       table.string("contrasenia", 60).notNullable();
       table.timestamps();
     });
