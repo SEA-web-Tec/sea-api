@@ -5,31 +5,57 @@
  * @param {Request} ctx.request
  * @param {Response} ctx.response
  */
-const Hash = use('Hash')
+const Hash = use("Hash");
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
   async login({ request, response, auth }) {
     try {
-      const { correo, contrasenia } = request.all()
-      var user = await Usuario.query().where({ correo: correo.toLowerCase() }).first()
+      const { correo, contrasenia } = request.all();
+      var user = await Usuario.query()
+        .where({ correo: correo.toLowerCase() })
+        .first();
+
       if (user) {
-        const passwordVerified = await Hash.verify(contrasenia, user.contrasenia)
+        const passwordVerified = await Hash.verify(
+          contrasenia,
+          user.contrasenia
+        );
 
         if (passwordVerified) {
-            var res = {}
-            const token = await auth.generate(user)
-            res.token = token.token
-            res.user = user
-            return response.status(200).json(res)
-        }
-        return response.status(401).json({
-            message: 'No ha sido posible verificar sus credenciales. El correo o la contraseña no coinciden.',
-        })
+          var res = {};
+          const token = await auth.generate(user);
+          res.token = token.token;
+          res.user = {
+            id: user.id,
+            nombres: user.nombres,
+            apellidoPaterno: user.apellidoPaterno,
+            apellidoMaterno: user.apellidoMaterno,
+            departamentoAcademico: user.departamentoAcademico,
+            fotoPerfil: user.fotoPerfil,
+            fotoPortada: user.fotoPortada,
+            correo: user.correo,
+            numeroEconomico: user.numeroEconomico,
+            rfc: user.rfc,
+            curp: user.curp,
+            cedulaProfesional: user.cedulaProfesional,
+            estudios: user.estudios,
+            sexo: user.sexo,
+            userType: user.userType,
+          };
 
-    }
+          return response.status(200).json(res);
+        }
+
+        return response.status(401).json({
+          message:
+            "No ha sido posible verificar sus credenciales. El correo o la contraseña no coinciden.",
+        });
+      }
     } catch (err) {
-      console.log(err)
-      return response.status(err.status).json({ message: err.message })
+      return response.status(500).json({
+        message:
+          "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",
+      });
     }
   }
 
@@ -61,7 +87,7 @@ class UsuarioController {
       //Creacion del usuario
       const usuario = await Usuario.create({
         numeroEconomico: info.numeroEconomico,
-        nombre: info.nombre,
+        nombres: info.nombres,
         apellidoPaterno: info.apellidoPaterno,
         apellidoMaterno: info.apellidoMaterno,
         rfc: info.rfc,
@@ -71,7 +97,7 @@ class UsuarioController {
         departamentoAcademico: info.departamentoAcademico,
         fotoPerfil: info.fotoPerfil,
         fotoPortada: info.fotoPortada,
-        user_type: 2,
+        userType: info.userType,
         sexo: info.sexo,
         estudios: info.estudios,
         contrasenia: info.contrasenia,
@@ -87,8 +113,60 @@ class UsuarioController {
         Usuario: usuario,
       });
     } catch (error) {
-      return response.status(400).json({
-        message: error.message,
+      return response.status(500).json({
+        message:
+          "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",
+      });
+    }
+  }
+
+  async profile({ params, response }) {
+    try {
+      var user = await Usuario.query().where({ id: params.id }).first();
+      var res = {};
+
+      res.user = {
+        id: user.id,
+        nombres: user.nombres,
+        apellidoPaterno: user.apellidoPaterno,
+        apellidoMaterno: user.apellidoMaterno,
+        departamentoAcademico: user.departamentoAcademico,
+        fotoPerfil: user.fotoPerfil,
+        fotoPortada: user.fotoPortada,
+        correo: user.correo,
+        numeroEconomico: user.numeroEconomico,
+        rfc: user.rfc,
+        curp: user.curp,
+        cedulaProfesional: user.cedulaProfesional,
+        estudios: user.estudios,
+        sexo: user.sexo,
+        userType: user.userType,
+      };
+
+      return response.status(200).json(res);
+    } catch (err) {
+      return response.status(500).json({
+        message:
+          "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",
+      });
+    }
+  }
+
+  async update({ request, response, params }) {
+    try {
+      var user = await Usuario.query().where({ id: params.id }).update({
+        fotoPerfil: request.body.fotoPerfil,
+        fotoPortada: request.body.fotoPortada,
+        correo: request.body.correo,
+        contrasenia: request.body.contrasenia,
+      });
+
+      return response.status(200).json(user);
+    } catch (err) {
+      console.log(err);
+      return response.status(500).json({
+        message:
+          "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",
       });
     }
   }
