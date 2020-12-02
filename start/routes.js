@@ -10,6 +10,12 @@ Route.group(() => {
   Route.post("auth/registrar", "UsuarioController.signup");
   Route.post("auth/login", "UsuarioController.login");
 
+  // Perfil
+  Route.get("usuarios/:id", "UsuarioController.profile").middleware("auth");
+  Route.patch("usuarios/:id/editar", "UsuarioController.update").middleware(
+    "auth"
+  );
+
   // Grupos
   Route.post("grupos/crear", "GrupoController.store").middleware("auth");
   Route.get("grupos/consulta", "GrupoController.index").middleware("auth");
