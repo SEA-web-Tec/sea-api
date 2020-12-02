@@ -2,6 +2,10 @@
 
 const evidenciasaprendizaje = use("App/Models/Evidenciasaprendizaje.js");
 const indicadorponderacion = use("App/Models/Indicadorponderacion.js");
+const Indicadoresalcance = use("App/Models/Indicadoresalcance");
+const Instrumentaciondidacticaunidad = use(
+  "App/Models/Instrumentaciondidacticaunidad"
+);
 
 class EvidenciasaprendizajeController {
   async index({ request, response }) {
@@ -14,9 +18,17 @@ class EvidenciasaprendizajeController {
       .query()
       .where("id_ins", instrumentacion.id_ins)
       .fetch();
+    const indicadoresA = await Indicadoresalcance.query()
+      .where("id_ins", "=", instrumentacion.id_ins)
+      .fetch();
+    const unidades = await Instrumentaciondidacticaunidad.query()
+      .where("id_ins", instrumentacion.id_ins)
+      .fetch();
     return response.json({
       evidencia: evidencia,
-      indicadores: indicadores,
+      indicadoresponderacion: indicadores,
+      indicadoresalcance: indicadoresA,
+      unidades: unidades,
     });
   }
 
@@ -31,11 +43,16 @@ class EvidenciasaprendizajeController {
       .where("id_ins", info.evidencias[0].id_ins)
       .delete();
     for (let i in info.evidencias) {
+      const indicadoralcance = await Indicadoresalcance.query()
+        .where("id_ins", "=", info.evidencias[0].id_ins)
+        .andWhere("unidad", info.evidencias[i].unidad)
+        .fetch();
+
       const evidencia = await evidenciasaprendizaje.create({
         nombre: info.evidencias[i].nombre,
         ponderacion: info.evidencias[i].ponderacion,
         evaluacion_formativa: info.evidencias[i].evaluacion_formativa,
-        id_instrumento_evaluacion: info.evidencias[i].id_instrumento_evaluacion,
+        id_indicador: indicadoralcance.toJson().id,
         id_ins: info.evidencias[i].id_ins,
         unidad: info.evidencias[i].unidad,
       });

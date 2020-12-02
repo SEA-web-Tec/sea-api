@@ -3,6 +3,9 @@
 const Instrumentaciondidactica = use("App/Models/Instrumentaciondidactica");
 const Grupo = use("App/Models/Grupo");
 const Materia = use("App/Models/Materia");
+const Instrumentaciondidacticaunidad = use(
+  "App/Models/Instrumentaciondidacticaunidad"
+);
 
 class InstrumentaciondidacticaController {
   async index({ request, response }) {
@@ -36,9 +39,13 @@ class InstrumentaciondidacticaController {
       .where("id", grupo.toJSON()[0].materia_id)
       .fetch();
 
+    const unidades = await Instrumentaciondidacticaunidad.query()
+      .where("id_ins", intrumentacion.toJSON().id)
+      .fetch();
     return response.json({
       intrumentacion: intrumentacion,
-      unidades: materia.toJSON()[0].unidades,
+      unidades: unidades,
+      no_unidades: materia.toJSON()[0].unidades,
     });
   }
 

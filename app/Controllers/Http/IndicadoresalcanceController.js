@@ -7,6 +7,13 @@ class IndicadoresalcanceController {
   async index({ request }) {
     const indicador_id = request.all();
     return await Indicadoresalcance.query()
+      .where("id_ins", "=", indicador_id.id_ins)
+      .fetch();
+  }
+
+  async indexInd({ request }) {
+    const indicador_id = request.all();
+    return await Indicadoresalcance.query()
       .where("id", "=", indicador_id.id)
       .fetch();
   }
@@ -14,37 +21,81 @@ class IndicadoresalcanceController {
   //guardar
   async store({ request, response }) {
     const info = request.all();
-    const indicadores = await Indicadoresalcance.create({
-      A: info.A,
-      B: info.B,
-      C: info.C,
-      D: info.D,
-      E: info.E,
-      F: info.F,
-      G: info.G,
-      H: info.H,
-      I: info.I,
-      J: info.J,
-      K: info.K,
-      L: info.L,
-      M: info.M,
-      N: info.N,
-      O: info.O,
-      P: info.P,
-      Q: info.Q,
-      R: info.R,
-      S: info.S,
-      T: info.T,
-      U: info.U,
-      V: info.V,
-      W: info.W,
-      X: info.X,
-      Y: info.Y,
-      Z: info.Z,
-    });
+
+    for (let i in info.indicadoresalcance) {
+      const elemento = await Indicadoresalcance.query()
+        .where("id_ins", info.id_ins)
+        .andWhere("unidad", info.indicadoresalcance[i].unidad)
+        .fetch();
+      if (JSON.stringify(elemento) == "[]") {
+        await Indicadoresalcance.create({
+          A: info.indicadoresalcance[i].A,
+          B: info.indicadoresalcance[i].B,
+          C: info.indicadoresalcance[i].C,
+          D: info.indicadoresalcance[i].D,
+          E: info.indicadoresalcance[i].E,
+          F: info.indicadoresalcance[i].F,
+          G: info.indicadoresalcance[i].G,
+          H: info.indicadoresalcance[i].H,
+          I: info.indicadoresalcance[i].I,
+          J: info.indicadoresalcance[i].J,
+          K: info.indicadoresalcance[i].K,
+          L: info.indicadoresalcance[i].L,
+          M: info.indicadoresalcance[i].M,
+          N: info.indicadoresalcance[i].N,
+          O: info.indicadoresalcance[i].O,
+          P: info.indicadoresalcance[i].P,
+          Q: info.indicadoresalcance[i].Q,
+          R: info.indicadoresalcance[i].R,
+          S: info.indicadoresalcance[i].S,
+          T: info.indicadoresalcance[i].T,
+          U: info.indicadoresalcance[i].U,
+          V: info.indicadoresalcance[i].V,
+          W: info.indicadoresalcance[i].W,
+          X: info.indicadoresalcance[i].X,
+          Y: info.indicadoresalcance[i].Y,
+          Z: info.indicadoresalcance[i].Z,
+          id_ins: info.id_ins,
+          unidad: info.indicadoresalcance[i].unidad,
+        });
+      } else {
+        await Indicadoresalcance.query()
+          .where("id_ins", info.id_ins)
+          .andWhere("unidad", info.unidades[i].unidad)
+          .update({
+            A: info.indicadoresalcance[i].A,
+            B: info.indicadoresalcance[i].B,
+            C: info.indicadoresalcance[i].C,
+            D: info.indicadoresalcance[i].D,
+            E: info.indicadoresalcance[i].E,
+            F: info.indicadoresalcance[i].F,
+            G: info.indicadoresalcance[i].G,
+            H: info.indicadoresalcance[i].H,
+            I: info.indicadoresalcance[i].I,
+            J: info.indicadoresalcance[i].J,
+            K: info.indicadoresalcance[i].K,
+            L: info.indicadoresalcance[i].L,
+            M: info.indicadoresalcance[i].M,
+            N: info.indicadoresalcance[i].N,
+            O: info.indicadoresalcance[i].O,
+            P: info.indicadoresalcance[i].P,
+            Q: info.indicadoresalcance[i].Q,
+            R: info.indicadoresalcance[i].R,
+            S: info.indicadoresalcance[i].S,
+            T: info.indicadoresalcance[i].T,
+            U: info.indicadoresalcance[i].U,
+            V: info.indicadoresalcance[i].V,
+            W: info.indicadoresalcance[i].W,
+            X: info.indicadoresalcance[i].X,
+            Y: info.indicadoresalcance[i].Y,
+            Z: info.indicadoresalcance[i].Z,
+            id_ins: info.id_ins,
+            unidad: info.indicadoresalcance[i].unidad,
+          });
+      }
+    }
     return response.json({
-      message: "Se creo el indicador de alcance de la unidad exitosamente",
-      Indicadoresalcance: indicadores,
+      message: "Se crearon el indicador de alcance de la unidad exitosamente",
     });
   }
 
@@ -77,6 +128,7 @@ class IndicadoresalcanceController {
     indicadoresMod.X = info.X;
     indicadoresMod.Y = info.Y;
     indicadoresMod.Z = info.Z;
+    indicadoresMod.id_ins = info.id_ins;
     await indicadoresMod.save();
     return response.json({
       message: "Se modifico el alcance de la unidad exitosamente",

@@ -19,8 +19,9 @@ class EvidenciasaprendizajeSchema extends Schema {
         ])
         .notNullable()
         .defaultTo("Otros");
+      table.integer("id_instrumento_evaluacion").unsigned();
       table
-        .integer("id_instrumento_evaluacion")
+        .integer("id_indicador")
         .unsigned()
         .references("id")
         .inTable("indicadoresalcances");

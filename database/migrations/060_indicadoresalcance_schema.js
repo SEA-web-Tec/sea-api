@@ -33,6 +33,11 @@ class IndicadoresalcanceSchema extends Schema {
       table.string("X", 100).defaultTo(" ");
       table.string("Y", 100).defaultTo(" ");
       table.string("Z", 100).defaultTo(" ");
+      table
+        .integer("id_ins")
+        .unsigned()
+        .references("id")
+        .inTable("instrumentaciondidacticas");
       table.timestamps();
     });
   }
