@@ -6,22 +6,20 @@ class ReactivosController {
       id,
       id_maestro,
       id_materia,
-      tema,
+      unidad,
       tipo,
       texto_reactivo,
       respuesta_correcta,
-      fecha_creacion,
     } = request.all();
       
     const reactivos = Reactivos.create({
       id,
       id_maestro,
       id_materia,
-      tema,
+      unidad,
       tipo,
       texto_reactivo,
       respuesta_correcta,
-      fecha_creacion,
     });
     return reactivos
   }

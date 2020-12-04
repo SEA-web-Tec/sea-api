@@ -9,7 +9,7 @@ class ReactivosSchema extends Schema {
       table.increments("id").primary();
       table.integer("id_maestro").notNullable().unsigned();
       table.integer("id_materia").notNullable().unsigned();
-      table.integer("tema").notNullable();
+      table.integer("unidad").notNullable().unsigned();
       table
         .enu("tipo", [
           "abierto",
@@ -22,7 +22,6 @@ class ReactivosSchema extends Schema {
         .defaultTo("abierto");
       table.text("texto_reactivo").notNullable();
       table.text("respuesta_correcta").notNullable();
-      table.datetime("fecha_creacion").notNullable();
       table.timestamps();
     });
   }
