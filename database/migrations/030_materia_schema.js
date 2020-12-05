@@ -20,6 +20,19 @@ class MateriaSchema extends Schema {
       table.integer("modulo", 11).notNullable().defaultTo(0);
       table.integer("creditos_requeridos", 11).notNullable().defaultTo(0);
       table.string("objetivo", 1000).notNullable();
+      table
+        .enu("carrera", [
+          "Arquitectura",
+          "Ingeniería en Gestión Empresarial",
+          "Ingeniería Bioquímica",
+          "Ingeniería Civil",
+          "Ingeniería Electromecánica",
+          "Ingeniería en Sistemas Computacionales",
+          "Ingeniería Industrial",
+          "Licenciatura en Administración",
+          "Contador Público",
+        ])
+        .notNullable();
       table.bool("captura_temario_activa").notNullable().defaultTo(false);
       table.text("intencion_didactica").notNullable();
       table.text("competencias_especificas").notNullable();

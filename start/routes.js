@@ -17,8 +17,8 @@ Route.group(() => {
   );
 
   // Grupos
+  Route.get("grupos/:id", "GrupoController.index").middleware("auth");
   Route.post("grupos/crear", "GrupoController.store").middleware("auth");
-  Route.get("grupos/consulta", "GrupoController.index").middleware("auth");
 
   //Materias
   Route.post("materias/crear", "MateriaController.store").middleware("auth");
