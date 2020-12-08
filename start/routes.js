@@ -1,5 +1,7 @@
 "use strict";
 
+const { route } = require('@adonisjs/framework/src/Route/Manager');
+
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
@@ -71,4 +73,14 @@ Route.group(() => {
     "evidenciasaprendizaje/consulta",
     "EvidenciasaprendizajeController.index"
   );
+  
+  //Reactivos
+  Route.post("reactivo/crear","ReactivosController.store");
+
+  //renglones rubricas
+  Route.post(
+    "renglonesrubrica/crear",
+    "RenglonesrubricaController.store"
+  );
+
 }).prefix("api/v1/");
