@@ -8,6 +8,10 @@
 const Hash = use("Hash");
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
+  async index() {
+    return await Usuario.query().fetch();
+  }
+
   async login({ request, response, auth }) {
     try {
       const { correo, contrasenia } = request.all();
