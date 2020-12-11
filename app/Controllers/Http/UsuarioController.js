@@ -8,6 +8,10 @@
 const Hash = use("Hash");
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
+  async index() {
+    return await Usuario.query().fetch();
+  }
+
   async login({ request, response, auth }) {
     try {
       const { correo, contrasenia } = request.all();
@@ -177,10 +181,8 @@ class UsuarioController {
       var user = await Usuario.query()
         .where({ id: params.id })
         .update(updatedUser);
-      console.log(response.body, params);
       return response.status(201).json(user);
     } catch (err) {
-      console.log(err);
       return response.status(500).json({
         message:
           "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",
