@@ -77,10 +77,51 @@ Route.group(() => {
   //Reactivos
   Route.post("reactivo/crear","ReactivosController.store");
 
-  //renglones rubricas
+  //rubricas
   Route.post(
-    "renglonesrubrica/crear",
-    "RenglonesrubricaController.store"
+    "rubrica/crear",
+    "RubricaController.store"
+  );
+  //consulta las rubricas del usuario por su id
+  Route.get(
+    "rubrica/consultarubrica",
+    "RubricaController.index"
+  );
+  //consulta los renglones de la rubrica por su id
+  Route.get(
+    "rubrica/consultarenglones",
+    "RubricaController.show"
   );
 
+  //listascotejo
+  Route.post(
+    "listacojeto/crear",
+    "ListasdecotejoController.store"
+  );
+  //consulta las listas cotejo del usuario por su id
+  Route.get(
+    "listacotejo/consultalistacotejo",
+    "ListasdecotejoController.index"
+  );
+  //consulta los renglones de la lista cotejo por su id
+  Route.get(
+    "listacotejo/consultarenglones",
+    "ListasdecotejoController.show"
+  );
+
+  //listasobservaciones
+  Route.post(
+    "listasobservacion/crear",
+    "ListasdeobservacionController.store"
+  );
+  //consulta las lista observacion del usuario por su id
+  Route.get(
+    "listasobservacion/consultalistasobservacion",
+    "ListasdeobservacionController.index"
+  );
+  //consulta los renglones de la lista observacion por su id
+  Route.get(
+    "listasobservacion/consultarenglones",
+    "ListasdeobservacionController.show"
+  );
 }).prefix("api/v1/");
