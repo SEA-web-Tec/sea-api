@@ -28,9 +28,12 @@ Route.group(() => {
   Route.get("temario/consulta", "TemarioController.index");
 
   //Indicadores de alcence de ID
-  Route.post("indicadoresalcance/crear", "IndicadoresalcanceController.store");
+  Route.post(
+    "indicadoresalcance/crear",
+    "IndicadoresalcanceController.store"
+  ).middleware("auth");
   Route.get(
-    "indicadoresalcance/consulta",
+    "indicadoresalcance/consulta/",
     "IndicadoresalcanceController.index"
   );
   Route.put("indicadoresalcance/editar", "IndicadoresalcanceController.update");
@@ -40,13 +43,24 @@ Route.group(() => {
     "instrumentaciondidactica/crear",
     "InstrumentaciondidacticaController.store"
   );
-  Route.get(
-    "instrumentaciondidactica/consulta",
-    "InstrumentaciondidacticaController.index"
-  );
+  //Multiple
   Route.get(
     "instrumentaciondidactica/intrumentacion_completa",
     "InstrumentaciondidacticaController.intrumentacion_completa"
+  );
+
+  //ID solo para el evaluador
+  Route.get(
+    "instrumentaciondidactica/buscar_intrumentacion/:id_ins",
+    "InstrumentaciondidacticaController.buscarIntrumentacion"
+  );
+  Route.get(
+    "instrumentaciondidactica/consulta_intrumentaciones",
+    "InstrumentaciondidacticaController.index"
+  );
+  Route.post(
+    "instrumentaciondidactica/evaluar",
+    "InstrumentaciondidacticaController.evaluar"
   );
 
   //ID para crear, consultar y buscar completos
@@ -68,7 +82,7 @@ Route.group(() => {
     "EvidenciasaprendizajeController.store"
   );
   Route.get(
-    "evidenciasaprendizaje/consulta",
+    "evidenciasaprendizaje/consulta/:id_ins",
     "EvidenciasaprendizajeController.index"
   );
 }).prefix("api/v1/");

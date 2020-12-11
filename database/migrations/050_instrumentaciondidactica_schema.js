@@ -14,6 +14,12 @@ class InstrumentaciondidacticaSchema extends Schema {
         .references("id")
         .inTable("usuarios");
       table.timestamps();
+      table
+        .enu("estado", ["Abierta", "Entregada", "Aprobada", "Rechazada"])
+        .notNullable()
+        .defaultTo("Abierta");
+      table.text("comentario").nullable();
+      table.integer("id_evaluador").nullable();
     });
   }
 

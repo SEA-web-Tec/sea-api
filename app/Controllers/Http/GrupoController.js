@@ -16,10 +16,6 @@ class GrupoController {
 			usuario_id: info.usuario_id,
 			anio: info.anio,
 			periodo: info.periodo,
-			gestion_del_curso: info.gestion_del_curso,
-			id_intrumentaciondidactica: 1,
-			id_profesor_evaluador: 1,
-			fecha_cambio: date,
 			updated_at: date
 		})
 		return response.json({

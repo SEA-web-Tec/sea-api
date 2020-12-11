@@ -21,7 +21,6 @@ class IndicadoresalcanceController {
   //guardar
   async store({ request, response }) {
     const info = request.all();
-
     for (let i in info.indicadoresalcance) {
       const elemento = await Indicadoresalcance.query()
         .where("id_ins", info.id_ins)
@@ -61,7 +60,7 @@ class IndicadoresalcanceController {
       } else {
         await Indicadoresalcance.query()
           .where("id_ins", info.id_ins)
-          .andWhere("unidad", info.unidades[i].unidad)
+          .andWhere("unidad", info.indicadoresalcance[i].unidad)
           .update({
             A: info.indicadoresalcance[i].A,
             B: info.indicadoresalcance[i].B,

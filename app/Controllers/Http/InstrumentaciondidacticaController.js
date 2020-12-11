@@ -6,15 +6,69 @@ const Materia = use("App/Models/Materia");
 const Instrumentaciondidacticaunidad = use(
   "App/Models/Instrumentaciondidacticaunidad"
 );
+const Database = use("Database");
 
 class InstrumentaciondidacticaController {
-  async index({ request, response }) {
-    const info = request.all();
-    await Instrumentaciondidactica.query()
-      .where("grupo_id", info.grupo_id)
-      .andWhere("usuario_id", info.usuario_id)
+  //solo el evaluador buscar todas las intrumentaciones Entregadas
+  async index({ response }) {
+    const Database = use("Database");
+    const busqueda = await Database.table("instrumentaciondidacticas")
+      .select(
+        "instrumentaciondidacticas.id",
+        "materias.nombre as materiaNombre",
+        "usuarios.nombres",
+        "apellidoPaterno",
+        "apellidoMaterno",
+        "grupos.grupo"
+      )
+      .innerJoin(
+        "usuarios",
+        "instrumentaciondidacticas.usuario_id",
+        "usuarios.id"
+      )
+      .innerJoin("grupos", "instrumentaciondidacticas.grupo_id", "grupos.id")
+      .innerJoin("materias", "grupos.materia_id", "materias.id")
+      .where("estado", "Entregada");
+    return response.status(201).json(busqueda);
+  }
+
+  //buscarIntrumentacion Seleccionada
+  async buscarIntrumentacion({ response, params }) {
+    const intrumentacion = await Instrumentaciondidactica.query()
+      .where("id", params.id_ins)
+      .first();
+    const grupo = await Grupo.query()
+      .where("id", intrumentacion.grupo_id)
       .fetch();
-    await Grupo.query().where("id", info.grupo_id).fetch();
+    const materia = await Materia.query()
+      .where("id", grupo.toJSON()[0].materia_id)
+      .first();
+    const unidades = await Instrumentaciondidacticaunidad.query()
+      .where("id_ins", params.id_ins)
+      .fetch();
+    return response.json({
+      intrumentacion: intrumentacion,
+      unidades: unidades,
+      no_unidades: materia.unidades,
+    });
+  }
+
+  //solo el evaluador
+  async evaluar({ request, response }) {
+    const info = request.all();
+    console.log(info);
+    let estado = "Aprobada";
+    if (info.comentario != null) {
+      estado = "Rechazada";
+    }
+    console.log(estado);
+    await Instrumentaciondidactica.query().where("id", info.id_ins).update({
+      estado: estado,
+      comentario: info.comentario,
+    });
+    return response.json({
+      mensaje: "Intrumentacion evaluada correctamente",
+    });
   }
 
   async store({ request, response }) {
@@ -33,11 +87,11 @@ class InstrumentaciondidacticaController {
     const intrumentacion = await Instrumentaciondidactica.query()
       .where("grupo_id", info.grupo_id)
       .andWhere("usuario_id", info.usuario_id)
-      .fetch();
+      .first();
     const grupo = await Grupo.query().where("id", info.grupo_id).fetch();
     const materia = await Materia.query()
       .where("id", grupo.toJSON()[0].materia_id)
-      .fetch();
+      .first();
 
     const unidades = await Instrumentaciondidacticaunidad.query()
       .where("id_ins", intrumentacion.toJSON().id)
@@ -45,7 +99,7 @@ class InstrumentaciondidacticaController {
     return response.json({
       intrumentacion: intrumentacion,
       unidades: unidades,
-      no_unidades: materia.toJSON()[0].unidades,
+      no_unidades: materia.unidades,
     });
   }
 
