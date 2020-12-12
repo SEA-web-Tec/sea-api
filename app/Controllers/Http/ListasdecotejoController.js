@@ -49,6 +49,15 @@ class ListasdecotejoController {
     });
   }
 
+  async consultalc ({params, response, request}) {
+    const lc = await Listasdecotejo.query()
+    .where("id", params.id)
+    .first();
+
+    return response.json({
+      Listasdecotejo: lc,
+    });
+  }
 
   async show ({ params, request, response, view }) {
     //const info = request.all();

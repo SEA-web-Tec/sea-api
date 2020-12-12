@@ -60,6 +60,15 @@ class RubricaController {
     });
   }
 
+  async consultarubrica ({params, response, request}) {
+    const rub = await Rubrica.query()
+    .where("id", params.id)
+    .first();
+
+    return response.json({
+      Rubrica: rub,
+    });
+  }
 
   async show ({ params, request, response, view }) {
     
@@ -82,12 +91,21 @@ class RubricaController {
   async update ({ params, request, response }) {
   }
 
-  async destroy ({ params, request, response }) {
-    const info = request.all();
+  async borrarrenglon ({params, response, request}) {
 
-    await Rubrica.query().where("id", info.id).delete();
     await Renglonesrubrica.query()
-    .where("id_rubrica", info.id).delete();
+    .where("numrenglon", params.numrenglon)
+    .andWhere("id_rubrica", params.id_rubrica)
+    .delete();
+
+  }
+
+  async destroy ({ params, request, response }) {
+    //const info = request.all();
+
+    await Rubrica.query().where("id", params.id).delete();
+    await Renglonesrubrica.query()
+    .where("id_rubrica", params.id).delete();
 
     return response.json({
       message: "Se borro la rubrica",

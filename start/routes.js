@@ -95,10 +95,20 @@ Route.group(() => {
     "rubrica/consultarenglones/:id_rubrica",
     "RubricaController.show"
   );
+  //consulta datos de una rubrica en especifico sin renglones
+  Route.get(
+    "rubrica/consultarub/:id",
+    "RubricaController.consultarubrica"
+  );
 
   Route.delete(
-    "rubrica/borrar",
+    "rubrica/borrarrubrica/:id",
     "RubricaController.destroy"
+  );
+
+  Route.delete(
+    "rubrica/borrarenglon/:id",
+    "RubricaController.borrarrenglon"
   );
 
   //listascotejo
@@ -116,6 +126,11 @@ Route.group(() => {
     "listacotejo/consultarenglones/:id_cotejo",
     "ListasdecotejoController.show"
   );
+  //consulta datos de una lc en especifico sin renglones
+  Route.get(
+    "listacotejo/consultalc/:id",
+    "ListasdecotejoController.consultalc"
+  );
 
   //listasobservaciones
   Route.post(
@@ -132,4 +147,10 @@ Route.group(() => {
     "listasobservacion/consultarenglones/:id_observacion",
     "ListasdeobservacionController.show"
   );
+  //consulta datos de una lc en especifico sin renglones
+  Route.get(
+    "listasobservacion/consultalo/:id",
+    "ListasdeobservacionController.consultalo"
+  );  
+
 }).prefix("api/v1/");

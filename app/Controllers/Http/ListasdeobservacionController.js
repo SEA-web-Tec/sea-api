@@ -60,6 +60,15 @@ class ListasdeobservacionController {
     });
   }
 
+  async consultalo ({params, response, request}) {
+    const lo = await Listasdeobservacion.query()
+    .where("id", params.id)
+    .first();
+
+    return response.json({
+      Listasdeobservacion: lo,
+    });
+  }
 
   async edit ({ params, request, response, view }) {
   }
