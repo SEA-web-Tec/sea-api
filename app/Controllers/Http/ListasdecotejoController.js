@@ -1,91 +1,82 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Listasdecotejo = use("App/Models/Listasdecotejo")
+const Rengloneslc = use("App/Models/Renglones_lc")
 
-/**
- * Resourceful controller for interacting with listasdecotejos
- */
 class ListasdecotejoController {
-  /**
-   * Show a list of all listasdecotejos.
-   * GET listasdecotejos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+
+  async index ({ request, response, view, params }) {
+    //const info = request.all();
+
+    const lc = await Listasdecotejo.query()
+    .where("id_usuario", params.id_usuario).fetch();
+
+    return response.json({
+      Listasdecotejo: lc,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new listasdecotejo.
-   * GET listasdecotejos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async create ({ request, response, view }) {
   }
 
-  /**
-   * Create/save a new listasdecotejo.
-   * POST listasdecotejos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
+
   async store ({ request, response }) {
+    //solicitar info
+    let aux;
+    const info = request.all();
+
+    const listadecotejo = await Listasdecotejo.create({
+      nombre: info.Listasdecotejo.nombre,
+      descripcion: info.Listasdecotejo.descripcion,
+      id_usuario: info.Listasdecotejo.id_usuario,
+      id_carpeta: info.Listasdecotejo.id_carpeta,
+    });
+    
+    for (let i = 0; i < info.Renglones_lc.length; i++) {
+      //const element = array[i];
+      aux = await Rengloneslc.create({
+        numrenglon: i+1,
+        id_cotejo: listadecotejo.toJSON().id,
+        criterio: info.Renglones_lc[i].criterio,
+        puntos: info.Renglones_lc[i].puntos,
+      });
+    }
+
+    return response.json({
+      message: "se creo la lista de cotejo y sus renglones",
+      Listasdecotejo: listadecotejo,
+      Aux: aux,
+    });
   }
 
-  /**
-   * Display a single listasdecotejo.
-   * GET listasdecotejos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+  async consultalc ({params, response, request}) {
+    const lc = await Listasdecotejo.query()
+    .where("id", params.id)
+    .first();
+
+    return response.json({
+      Listasdecotejo: lc,
+    });
+  }
+
   async show ({ params, request, response, view }) {
+    //const info = request.all();
+
+    const renlc = await Rengloneslc.query()
+    .where("id_cotejo", params.id_cotejo).fetch();
+
+    return response.json({
+      Listasdecotejo: renlc,
+    });
   }
 
-  /**
-   * Render a form to update an existing listasdecotejo.
-   * GET listasdecotejos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+
   async edit ({ params, request, response, view }) {
   }
 
-  /**
-   * Update listasdecotejo details.
-   * PUT or PATCH listasdecotejos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a listasdecotejo with id.
-   * DELETE listasdecotejos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }

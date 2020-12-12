@@ -83,6 +83,77 @@ Route.group(() => {
   //Reactivos
   Route.post("reactivo/crear", "ReactivosController.store");
 
-  //renglones rubricas
-  Route.post("renglonesrubrica/crear", "RenglonesrubricaController.store");
+  //rubricas
+  Route.post(
+    "rubrica/crear",
+    "RubricaController.store"
+  );
+  //consulta las rubricas del usuario por su id
+  Route.get(
+    "rubrica/consultarubrica/:id_usuario",
+    "RubricaController.index"
+  );
+  //consulta los renglones de la rubrica por su id
+  Route.get(
+    "rubrica/consultarenglones/:id_rubrica",
+    "RubricaController.show"
+  );
+  //consulta datos de una rubrica en especifico sin renglones
+  Route.get(
+    "rubrica/consultarub/:id",
+    "RubricaController.consultarubrica"
+  );
+
+  Route.delete(
+    "rubrica/borrarrubrica/:id",
+    "RubricaController.destroy"
+  );
+
+  Route.delete(
+    "rubrica/borrarenglon/:id",
+    "RubricaController.borrarrenglon"
+  );
+
+  //listascotejo
+  Route.post(
+    "listacojeto/crear",
+    "ListasdecotejoController.store"
+  );
+  //consulta las listas cotejo del usuario por su id
+  Route.get(
+    "listacotejo/consultalistacotejo/:id_usuario",
+    "ListasdecotejoController.index"
+  );
+  //consulta los renglones de la lista cotejo por su id
+  Route.get(
+    "listacotejo/consultarenglones/:id_cotejo",
+    "ListasdecotejoController.show"
+  );
+  //consulta datos de una lc en especifico sin renglones
+  Route.get(
+    "listacotejo/consultalc/:id",
+    "ListasdecotejoController.consultalc"
+  );
+
+  //listasobservaciones
+  Route.post(
+    "listasobservacion/crear",
+    "ListasdeobservacionController.store"
+  );
+  //consulta las lista observacion del usuario por su id
+  Route.get(
+    "listasobservacion/consultalistasobservacion/:id_usuario",
+    "ListasdeobservacionController.index"
+  );
+  //consulta los renglones de la lista observacion por su id
+  Route.get(
+    "listasobservacion/consultarenglones/:id_observacion",
+    "ListasdeobservacionController.show"
+  );
+  //consulta datos de una lc en especifico sin renglones
+  Route.get(
+    "listasobservacion/consultalo/:id",
+    "ListasdeobservacionController.consultalo"
+  );  
+
 }).prefix("api/v1/");
