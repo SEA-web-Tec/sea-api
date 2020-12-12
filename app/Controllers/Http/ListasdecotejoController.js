@@ -5,11 +5,11 @@ const Rengloneslc = use("App/Models/Renglones_lc")
 
 class ListasdecotejoController {
 
-  async index ({ request, response, view }) {
-    const info = request.all();
+  async index ({ request, response, view, params }) {
+    //const info = request.all();
 
     const lc = await Listasdecotejo.query()
-    .where("id_usuario", info.id_usuario).fetch();
+    .where("id_usuario", params.id_usuario).fetch();
 
     return response.json({
       Listasdecotejo: lc,
@@ -35,7 +35,7 @@ class ListasdecotejoController {
     for (let i = 0; i < info.Renglones_lc.length; i++) {
       //const element = array[i];
       aux = await Rengloneslc.create({
-        numrenglon: info.Renglones_lc[i].numrenglon,
+        numrenglon: i+1,
         id_cotejo: listadecotejo.toJSON().id,
         criterio: info.Renglones_lc[i].criterio,
         puntos: info.Renglones_lc[i].puntos,
@@ -51,10 +51,10 @@ class ListasdecotejoController {
 
 
   async show ({ params, request, response, view }) {
-    const info = request.all();
+    //const info = request.all();
 
     const renlc = await Rengloneslc.query()
-    .where("id_cotejo", info.id_cotejo).fetch();
+    .where("id_cotejo", params.id_cotejo).fetch();
 
     return response.json({
       Listasdecotejo: renlc,

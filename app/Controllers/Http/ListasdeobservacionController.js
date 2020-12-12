@@ -5,11 +5,11 @@ const Rengloneslo = use("App/Models/Renglones_lo")
 
 class ListasdeobservacionController {
 
-  async index ({ request, response, view }) {
-    const info = request.all();
+  async index ({ request, response, view, params }) {
+    //const info = request.all();
 
     const lc = await Listasdeobservacion.query()
-    .where("id_usuario", info.id_usuario).fetch();
+    .where("id_usuario", params.id_usuario).fetch();
 
     return response.json({
       Listasdecotejo: lc,
@@ -35,7 +35,7 @@ class ListasdeobservacionController {
     for (let i = 0; i < info.Renglones_lo.length; i++) {
       //const element = array[i];
       aux = await Rengloneslo.create({
-        numrenglon: info.Renglones_lo[i].numrenglon,
+        numrenglon: i+1,
         id_observacion: listadeobervacion.toJSON().id,
         criterio: info.Renglones_lo[i].criterio,
         puntos: info.Renglones_lo[i].puntos,
@@ -50,10 +50,10 @@ class ListasdeobservacionController {
   }
 
   async show ({ params, request, response, view }) {
-    const info = request.all();
+    //const info = request.all();
 
     const renlo = await Rengloneslo.query()
-    .where("id_observacion", info.id_observacion).fetch();
+    .where("id_observacion", params.id_observacion).fetch();
 
     return response.json({
       Listasdecotejo: renlo,

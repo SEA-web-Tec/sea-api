@@ -87,13 +87,18 @@ Route.group(() => {
   );
   //consulta las rubricas del usuario por su id
   Route.get(
-    "rubrica/consultarubrica",
+    "rubrica/consultarubrica/:id_usuario",
     "RubricaController.index"
   );
   //consulta los renglones de la rubrica por su id
   Route.get(
-    "rubrica/consultarenglones",
+    "rubrica/consultarenglones/:id_rubrica",
     "RubricaController.show"
+  );
+
+  Route.delete(
+    "rubrica/borrar",
+    "RubricaController.destroy"
   );
 
   //listascotejo
@@ -103,12 +108,12 @@ Route.group(() => {
   );
   //consulta las listas cotejo del usuario por su id
   Route.get(
-    "listacotejo/consultalistacotejo",
+    "listacotejo/consultalistacotejo/:id_usuario",
     "ListasdecotejoController.index"
   );
   //consulta los renglones de la lista cotejo por su id
   Route.get(
-    "listacotejo/consultarenglones",
+    "listacotejo/consultarenglones/:id_cotejo",
     "ListasdecotejoController.show"
   );
 
@@ -119,12 +124,12 @@ Route.group(() => {
   );
   //consulta las lista observacion del usuario por su id
   Route.get(
-    "listasobservacion/consultalistasobservacion",
+    "listasobservacion/consultalistasobservacion/:id_usuario",
     "ListasdeobservacionController.index"
   );
   //consulta los renglones de la lista observacion por su id
   Route.get(
-    "listasobservacion/consultarenglones",
+    "listasobservacion/consultarenglones/:id_observacion",
     "ListasdeobservacionController.show"
   );
 }).prefix("api/v1/");

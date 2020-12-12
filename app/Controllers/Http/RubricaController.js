@@ -5,14 +5,13 @@ const Renglonesrubrica = use("App/Models/Renglonesrubrica")
 
 class RubricaController {
 
-  async index ({ request, response, view }) {
-    const info = request.all();
+  async index ({ request, response, view, params }) {
 
     /*const renrub = await Renglonesrubrica.query()
     .where("id_rubrica", info.id_rubrica).fetch();*/
   
     const rub = await Rubrica.query()
-    .where("id_usuario", info.id_usuario).fetch();
+    .where("id_usuario", params.id_usuario).fetch();
 
     return response.json({
       Rubrica: rub,
@@ -38,7 +37,7 @@ class RubricaController {
     for (let i = 0; i < info.Renglonesrubrica.length; i++) {
       //const element = array[i];
       aux = await Renglonesrubrica.create({
-        numrenglon: info.Renglonesrubrica[i].numrenglon,
+        numrenglon: i+1,
         id_rubrica: rubrica.toJSON().id,
         criterio: info.Renglonesrubrica[i].criterio,
         excelente: info.Renglonesrubrica[i].excelente,
@@ -63,10 +62,9 @@ class RubricaController {
 
 
   async show ({ params, request, response, view }) {
-    const info = request.all();
     
     const renrub = await Renglonesrubrica.query()
-    .where("id_rubrica", info.id_rubrica).fetch();
+    .where("id_rubrica", params.id_rubrica).fetch();
 
     return response.json({
       //Rubrica: rub,
@@ -76,6 +74,8 @@ class RubricaController {
 
 
   async edit ({ params, request, response, view }) {
+    
+
   }
 
 
@@ -83,6 +83,15 @@ class RubricaController {
   }
 
   async destroy ({ params, request, response }) {
+    const info = request.all();
+
+    await Rubrica.query().where("id", info.id).delete();
+    await Renglonesrubrica.query()
+    .where("id_rubrica", info.id).delete();
+
+    return response.json({
+      message: "Se borro la rubrica",
+    });
   }
 }
 
