@@ -3,6 +3,7 @@
 const Instrumentaciondidacticaunidad = use(
   "App/Models/Instrumentaciondidacticaunidad"
 );
+const Instrumentaciondidactica = use("App/Models/Instrumentaciondidactica");
 
 class InstrumentaciondidacticaunidadController {
   async index({ request }) {
@@ -12,8 +13,15 @@ class InstrumentaciondidacticaunidadController {
       .fetch();
   }
 
+  //solo el evaluador
+
   async store({ request, response }) {
     const info = request.all();
+    await Instrumentaciondidactica.query()
+      .where("id", info.unidades[0].id_ins)
+      .update({
+        estado: "Entregada",
+      });
     for (let i in info.unidades) {
       const elemento = await Instrumentaciondidacticaunidad.query()
         .where("id_ins", info.unidades[i].id_ins)
@@ -30,7 +38,6 @@ class InstrumentaciondidacticaunidadController {
           material_apoyo: info.unidades[i].material_apoyo,
           semana_clases: info.unidades[i].semana_clases,
           semana_evaluacion: info.unidades[i].semana_evaluacion,
-          comentario: info.unidades[i].comentario,
         });
       } else {
         await Instrumentaciondidacticaunidad.query()
@@ -46,7 +53,6 @@ class InstrumentaciondidacticaunidadController {
             material_apoyo: info.unidades[i].material_apoyo,
             semana_clases: info.unidades[i].semana_clases,
             semana_evaluacion: info.unidades[i].semana_evaluacion,
-            comentario: info.unidades[i].comentario,
           });
       }
     }
