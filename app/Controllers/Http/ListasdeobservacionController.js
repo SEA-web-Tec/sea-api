@@ -1,91 +1,81 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Listasdeobservacion = use("App/Models/Listasdeobservacion")
+const Rengloneslo = use("App/Models/Renglones_lo")
 
-/**
- * Resourceful controller for interacting with listasdeobservacions
- */
 class ListasdeobservacionController {
-  /**
-   * Show a list of all listasdeobservacions.
-   * GET listasdeobservacions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+
+  async index ({ request, response, view, params }) {
+    //const info = request.all();
+
+    const lc = await Listasdeobservacion.query()
+    .where("id_usuario", params.id_usuario).fetch();
+
+    return response.json({
+      Listasdecotejo: lc,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new listasdeobservacion.
-   * GET listasdeobservacions/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+
   async create ({ request, response, view }) {
   }
 
-  /**
-   * Create/save a new listasdeobservacion.
-   * POST listasdeobservacions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    //solicitar info
+    let aux;
+    const info = request.all();
+
+    const listadeobervacion = await Listasdeobservacion.create({
+      nombre: info.Listasdeobservacion.nombre,
+      descripcion: info.Listasdeobservacion.descripcion,
+      id_usuario: info.Listasdeobservacion.id_usuario,
+      id_carpeta: info.Listasdeobservacion.id_carpeta,
+    });
+    
+    for (let i = 0; i < info.Renglones_lo.length; i++) {
+      //const element = array[i];
+      aux = await Rengloneslo.create({
+        numrenglon: i+1,
+        id_observacion: listadeobervacion.toJSON().id,
+        criterio: info.Renglones_lo[i].criterio,
+        puntos: info.Renglones_lo[i].puntos,
+      });
+    }
+
+    return response.json({
+      message: "se creo la lista de observacion y sus renglones",
+      Listasdeobservacion: listadeobervacion,
+      Aux: aux,
+    });
   }
 
-  /**
-   * Display a single listasdeobservacion.
-   * GET listasdeobservacions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    //const info = request.all();
+
+    const renlo = await Rengloneslo.query()
+    .where("id_observacion", params.id_observacion).fetch();
+
+    return response.json({
+      Listasdecotejo: renlo,
+    });
   }
 
-  /**
-   * Render a form to update an existing listasdeobservacion.
-   * GET listasdeobservacions/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+  async consultalo ({params, response, request}) {
+    const lo = await Listasdeobservacion.query()
+    .where("id", params.id)
+    .first();
+
+    return response.json({
+      Listasdeobservacion: lo,
+    });
+  }
+
   async edit ({ params, request, response, view }) {
   }
 
-  /**
-   * Update listasdeobservacion details.
-   * PUT or PATCH listasdeobservacions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a listasdeobservacion with id.
-   * DELETE listasdeobservacions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }

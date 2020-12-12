@@ -1,91 +1,59 @@
 'use strict'
+const Renglonesrubrica = use("App/Models/Renglonesrubrica")
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with renglonesrubricas
- */
 class RenglonesrubricaController {
-  /**
-   * Show a list of all renglonesrubricas.
-   * GET renglonesrubricas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+ 
   async index ({ request, response, view }) {
+    const info = request.all();
+    
+    return await Renglonesrubrica.query()
+    .where("id_usuario", info.id_usuario).fetch();
+
   }
 
-  /**
-   * Render a form to be used for creating a new renglonesrubrica.
-   * GET renglonesrubricas/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async create ({ request, response, view }) {
   }
 
-  /**
-   * Create/save a new renglonesrubrica.
-   * POST renglonesrubricas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    //solicitar info
+    const info = request.all();
+
+    const renglonesrubrica = await Renglonesrubrica.create({
+      numrenglon: info.numrenglon,
+      id_rubrica: info.id_rubrica,
+      criterio: info.criterio,
+      excelente: info.excelente,
+      bueno: info.bueno,
+      regular: info.regular,
+      suficiente: info.suficiente,
+      insuficiente: info.insuficiente,
+      puntosexcelente: info.puntosexcelente,
+      puntosbueno: info.puntosbueno,
+      puntosregular: info.puntosregular,
+      puntossuficiente: info.puntossuficiente,
+      puntosinsuficiente: info.puntosinsuficiente,
+    });
+    return response.json({
+      message: "se creo el renglon rubrica",
+      Renglonesrubrica: renglonesrubrica,
+    });
   }
 
-  /**
-   * Display a single renglonesrubrica.
-   * GET renglonesrubricas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    const info = request.all();
+    
+    return await Renglonesrubrica.query()
+    .where("id_rubrica", info.id_rubrica).fetch();
+
   }
 
-  /**
-   * Render a form to update an existing renglonesrubrica.
-   * GET renglonesrubricas/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async edit ({ params, request, response, view }) {
   }
 
-  /**
-   * Update renglonesrubrica details.
-   * PUT or PATCH renglonesrubricas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
+    
   }
 
-  /**
-   * Delete a renglonesrubrica with id.
-   * DELETE renglonesrubricas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }

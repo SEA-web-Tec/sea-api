@@ -12,7 +12,6 @@ class ExamenesSchema extends Schema {
       table.text("nombre").notNullable();
       table.specificType("unidad", "TINYINT").notNullable();
       table.text("descripcion").notNullable();
-      table.datetime("fecha_creacion").notNullable();
       table.timestamps();
     });
   }

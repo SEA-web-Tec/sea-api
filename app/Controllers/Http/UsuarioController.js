@@ -8,6 +8,10 @@
 const Hash = use("Hash");
 const Usuario = use("App/Models/Usuario");
 class UsuarioController {
+  async index() {
+    return await Usuario.query().fetch();
+  }
+
   async login({ request, response, auth }) {
     try {
       const { correo, contrasenia } = request.all();
@@ -42,13 +46,15 @@ class UsuarioController {
             sexo: user.sexo,
             userType: user.userType,
           };
-
           return response.status(200).json(res);
         }
-
         return response.status(401).json({
           message:
             "No ha sido posible verificar sus credenciales. El correo o la contraseña no coinciden.",
+        });
+      } else {
+        return response.status(404).json({
+          message: "No se encontró un usuario con ese correo registrado",
         });
       }
     } catch (err) {
@@ -154,16 +160,29 @@ class UsuarioController {
 
   async update({ request, response, params }) {
     try {
-      var user = await Usuario.query().where({ id: params.id }).update({
-        fotoPerfil: request.body.fotoPerfil,
-        fotoPortada: request.body.fotoPortada,
-        correo: request.body.correo,
-        contrasenia: request.body.contrasenia,
-      });
+      const updatedUser = {};
 
-      return response.status(200).json(user);
+      if (request.body.fotoPerfil) {
+        updatedUser.fotoPerfil = request.body.fotoPerfil;
+      }
+
+      if (request.body.fotoPortada) {
+        updatedUser.fotoPortada = request.body.fotoPortada;
+      }
+
+      if (request.body.correo) {
+        updatedUser.correo = request.body.correo;
+      }
+
+      if (request.body.contrasenia) {
+        updatedUser.contrasenia = await Hash.make(request.body.contrasenia);
+      }
+
+      var user = await Usuario.query()
+        .where({ id: params.id })
+        .update(updatedUser);
+      return response.status(201).json(user);
     } catch (err) {
-      console.log(err);
       return response.status(500).json({
         message:
           "Ha ocurrido un error en el servidor, favor de intentarlo nuevamente.",

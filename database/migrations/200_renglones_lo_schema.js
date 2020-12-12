@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class RenglonesLoSchema extends Schema {
   up() {
-    this.create("renglones_lo", (table) => {
+    this.create("renglones_los", (table) => {
       table.increments("id").primary().notNullable().unsigned();
       table.specificType("numrenglon", "TINYINT").notNullable();
       table.integer("id_observacion").notNullable().unsigned();
@@ -16,7 +16,7 @@ class RenglonesLoSchema extends Schema {
   }
 
   down() {
-    this.drop("renglones_lo");
+    this.drop("renglones_los");
   }
 }
 

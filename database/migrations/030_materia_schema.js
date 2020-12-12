@@ -9,23 +9,32 @@ class MateriaSchema extends Schema {
       table.increments("id").primary();
       table.string("nombre", 100).notNullable();
       table.string("abreviatura", 20).notNullable();
-      table.integer("departamento_academico").notNullable().defaultTo(0);
-      table.integer("creditos").notNullable().defaultTo(0);
-      table.integer("horas_teoria").notNullable().defaultTo(0);
-      table.integer("horas_practica").notNullable().defaultTo(0);
+      table
+        .enu("departamento_academico", [
+          "DEPARTAMENTO DE CIENCIAS BASICAS",
+          "DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS",
+          "DEPARTAMENTO DE CIENCIAS DE LA TIERRA",
+          "DEPARTAMENTO DE INGENIERIAS",
+          "DEPARTAMENTO DE METAL-MECANICA",
+          "DEPARTAMENTO DE SISTEMAS Y COMPUTACIÓN",
+        ])
+        .notNullable();
       table.integer("semestre").notNullable().defaultTo(1);
-      table.integer("plan").notNullable().defaultTo(0);
       table.integer("id_temario").notNullable().defaultTo(0);
       table.integer("unidades").unsigned().notNullable().defaultTo(0);
-      table.integer("modulo", 11).notNullable().defaultTo(0);
-      table.integer("creditos_requeridos", 11).notNullable().defaultTo(0);
-      table.string("objetivo", 1000).notNullable();
-      table.bool("captura_temario_activa").notNullable().defaultTo(false);
-      table.text("intencion_didactica").notNullable();
-      table.text("competencias_especificas").notNullable();
-      table.text("competencias_genericas").notNullable();
-      table.text("competencias_previas").notNullable();
-      table.text("bibliografia").notNullable();
+      table
+        .enu("carrera", [
+          "ARQUITECTURA",
+          "INGENIERÍA EN GESTIÓN EMPRESARIAL",
+          "INGENIERÍA BIOQUÍMICA",
+          "INGENIERÍA CIVIL",
+          "INGENIERÍA ELECTROMECÁNICA",
+          "INGENIERÍA EN SISTEMAS COMPUTACIONALES",
+          "INGENIERÍA INDUSTRIAL",
+          "LICENCIATURA EN ADMINISTRACIÓN",
+          "CONTADOR PÚBLICO",
+        ])
+        .notNullable();
       table.timestamps();
     });
   }

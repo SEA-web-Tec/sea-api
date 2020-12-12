@@ -1,28 +1,38 @@
-'use strict'
-const Grupo = use('App/Models/Grupo')
-class GrupoController {
-	async index({ auth }){
-		const user = await auth.getUser()
-		return await Grupo.query().where('usuario_id', user.id).fetch()
-	}
-	async store({ request, response }) {
-		// Solicitar informacion
-		const info = request.all()
+"use strict";
+const Grupo = use("App/Models/Grupo");
+const Database = use("Database");
 
-		const date = new Date()
-		const grupo = await Grupo.create({
-			grupo: info.grupo,
-			materia_id: 1,
-			usuario_id: info.usuario_id,
-			anio: info.anio,
-			periodo: info.periodo,
-			updated_at: date
-		})
-		return response.json({
-			message: 'Se creo el grupo exitosamente',
-			Grupo: grupo
-		})
-	}		
+class GrupoController {
+  async index({ response }) {
+    const grupos = await Database.table("grupos")
+      .select("grupos.id", "nombre", "grupo")
+      .innerJoin("materias", "grupos.materia_id", "materias.id");
+    return response.status(201).json(grupos);
+  }
+
+  async show({ response, params }) {
+    const grupos = await Database.table("grupos")
+      .select("grupos.id", "nombre", "grupo", "carrera", "fotoPortada")
+      .innerJoin("materias", "grupos.materia_id", "materias.id")
+      .where("usuario_id", params.id);
+    return response.status(201).json(grupos);
+  }
+
+  async store({ request, response }) {
+    const info = request.all();
+    const grupo = await Grupo.create({
+      materia_id: info.materia_id,
+      usuario_id: info.usuario_id,
+      grupo: info.grupo,
+      anio: info.anio,
+      periodo: info.periodo,
+      fotoPortada: info.fotoPortada,
+    });
+    return response.json({
+      message: "Se creo el grupo exitosamente",
+      grupo: grupo,
+    });
+  }
 }
 
-module.exports = GrupoController
+module.exports = GrupoController;
