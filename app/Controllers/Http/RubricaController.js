@@ -91,13 +91,36 @@ class RubricaController {
   async update ({ params, request, response }) {
   }
 
-  async borrarrenglon ({params, response, request}) {
+  async borrareditarrenglon ({params, response, request}) {
+    let aux;
+    const info = request.all()
 
     await Renglonesrubrica.query()
-    .where("numrenglon", params.numrenglon)
-    .andWhere("id_rubrica", params.id_rubrica)
+    .where("id_rubrica", params.id)
     .delete();
 
+    for (let i = 0; i < info.Renglonesrubrica.length; i++) {
+      aux = await Renglonesrubrica
+      .create({
+        numrenglon: i+1,
+        id_rubrica: params.id,
+        criterio: info.Renglonesrubrica[i].criterio,
+        excelente: info.Renglonesrubrica[i].excelente,
+        bueno: info.Renglonesrubrica[i].bueno,
+        regular: info.Renglonesrubrica[i].regular,
+        suficiente: info.Renglonesrubrica[i].suficiente,
+        insuficiente: info.Renglonesrubrica[i].insuficiente,
+        puntosexcelente: info.Renglonesrubrica[i].puntosexcelente,
+        puntosbueno: info.Renglonesrubrica[i].puntosbueno,
+        puntosregular: info.Renglonesrubrica[i].puntosregular,
+        puntossuficiente: info.Renglonesrubrica[i].puntossuficiente,
+        puntosinsuficiente: info.Renglonesrubrica[i].puntosinsuficiente,
+      });
+    }
+
+    return response.json({
+      Aux: aux,
+    });
   }
 
   async destroy ({ params, request, response }) {

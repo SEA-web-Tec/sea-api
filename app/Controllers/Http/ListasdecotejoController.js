@@ -77,7 +77,39 @@ class ListasdecotejoController {
   async update ({ params, request, response }) {
   }
 
+  async borrareditarrenglon ({params, response, request}) {
+    let aux;
+    const info = request.all()
+
+    await Rengloneslc.query()
+    .where("id_cotejo", params.id)
+    .delete();
+
+    for (let i = 0; i < info.Renglones_lc.length; i++) {
+      aux = await Rengloneslc
+      .create({
+        numrenglon: i+1,
+        id_cotejo: params.id,
+        criterio: info.Renglones_lc[i].criterio,
+        puntos: info.Renglones_lc[i].puntos,
+      });
+    }
+
+    return response.json({
+      Aux: aux,
+    });
+  }
+
   async destroy ({ params, request, response }) {
+    //const info = request.all();
+
+    await Listasdecotejo.query().where("id", params.id).delete();
+    await Rengloneslc.query()
+    .where("id_cotejo", params.id).delete();
+
+    return response.json({
+      message: "Se borro la lista de cotejo",
+    });
   }
 }
 

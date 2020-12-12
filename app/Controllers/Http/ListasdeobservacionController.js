@@ -76,7 +76,37 @@ class ListasdeobservacionController {
   async update ({ params, request, response }) {
   }
 
+  async borrareditarrenglon ({params, response, request}) {
+    let aux;
+    const info = request.all()
+
+    await Rengloneslo.query()
+    .where("id_observacion", params.id)
+    .delete();
+
+    for (let i = 0; i < info.Renglones_lo.length; i++) {
+      aux = await Rengloneslo
+      .create({
+        numrenglon: i+1,
+        id_observacion: params.id,
+        criterio: info.Renglones_lo[i].criterio,
+        puntos: info.Renglones_lo[i].puntos,
+      });
+    }
+
+    return response.json({
+      Aux: aux,
+    });
+  }
+
   async destroy ({ params, request, response }) {
+    await Listasdeobservacion.query().where("id", params.id).delete();
+    await Rengloneslo.query()
+    .where("id_observacion", params.id).delete();
+
+    return response.json({
+      message: "Se borro la lista de observacion",
+    });
   }
 }
 
