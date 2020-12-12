@@ -9,21 +9,30 @@ class MateriaSchema extends Schema {
       table.increments("id").primary();
       table.string("nombre", 100).notNullable();
       table.string("abreviatura", 20).notNullable();
-      table.integer("departamento_academico").notNullable().defaultTo(0);
+      table
+        .enu("departamento_academico", [
+          "DEPARTAMENTO DE CIENCIAS BASICAS",
+          "DEPARTAMENTO DE CIENCIAS ECONOMICO ADMINISTRATIVAS",
+          "DEPARTAMENTO DE CIENCIAS DE LA TIERRA",
+          "DEPARTAMENTO DE INGENIERIAS",
+          "DEPARTAMENTO DE METAL-MECANICA",
+          "DEPARTAMENTO DE SISTEMAS Y COMPUTACIÓN",
+        ])
+        .notNullable();
       table.integer("semestre").notNullable().defaultTo(1);
       table.integer("id_temario").notNullable().defaultTo(0);
       table.integer("unidades").unsigned().notNullable().defaultTo(0);
       table
         .enu("carrera", [
-          "Arquitectura",
-          "Ingeniería en Gestión Empresarial",
-          "Ingeniería Bioquímica",
-          "Ingeniería Civil",
-          "Ingeniería Electromecánica",
-          "Ingeniería en Sistemas Computacionales",
-          "Ingeniería Industrial",
-          "Licenciatura en Administración",
-          "Contador Público",
+          "ARQUITECTURA",
+          "INGENIERÍA EN GESTIÓN EMPRESARIAL",
+          "INGENIERÍA BIOQUÍMICA",
+          "INGENIERÍA CIVIL",
+          "INGENIERÍA ELECTROMECÁNICA",
+          "INGENIERÍA EN SISTEMAS COMPUTACIONALES",
+          "INGENIERÍA INDUSTRIAL",
+          "LICENCIATURA EN ADMINISTRACIÓN",
+          "CONTADOR PÚBLICO",
         ])
         .notNullable();
       table.timestamps();

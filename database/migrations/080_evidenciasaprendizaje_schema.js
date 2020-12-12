@@ -7,18 +7,25 @@ class EvidenciasaprendizajeSchema extends Schema {
   up() {
     this.create("evidenciasaprendizajes", (table) => {
       table.increments("id").primary();
-      table.string("nombre", 50).notNullable();
+      table
+        .enu("nombre", [
+          "Examen",
+          "Ejercicio",
+          "Proyecto",
+          "Exposición",
+          "Otro",
+        ])
+        .notNullable()
+        .defaultTo("Examen");
       table.specificType("ponderacion", "TINYINT").notNullable().defaultTo("0");
       table
         .enu("evaluacion_formativa", [
-          "Examen",
-          "Lista de Cotejo",
-          "Lista de Observación",
+          "Lista de cotejo",
+          "Lista de observación",
           "Rubrica",
-          "Otros",
         ])
         .notNullable()
-        .defaultTo("Otros");
+        .defaultTo("Lista de Cotejo");
       table.integer("id_instrumento_evaluacion").unsigned();
       table
         .integer("id_indicador")

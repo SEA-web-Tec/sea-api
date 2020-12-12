@@ -27,53 +27,72 @@ Route.group(() => {
   //Materias
   Route.get("materias", "MateriaController.index").middleware("auth");
   Route.post("materias/crear", "MateriaController.store").middleware("auth");
+  Route.get("materias/con-grupo", "MateriaController.conGrupo").middleware(
+    "auth"
+  );
 
   //Temario
   Route.get("temarios", "TemarioController.index").middleware("auth");
   Route.post("temarios/crear", "TemarioController.store").middleware("auth");
 
   //Indicadores de alcence de ID
-  Route.post("indicadoresalcance/crear", "IndicadoresalcanceController.store");
+  Route.post("indicadoresalcance/crear", "IndicadoresalcanceController.store")
+    .middleware("auth")
+    .middleware("auth");
   Route.get(
-    "indicadoresalcance/consulta",
+    "indicadoresalcance/consulta/",
     "IndicadoresalcanceController.index"
-  );
-  Route.put("indicadoresalcance/editar", "IndicadoresalcanceController.update");
+  ).middleware("auth");
+  Route.put(
+    "indicadoresalcance/editar",
+    "IndicadoresalcanceController.update"
+  ).middleware("auth");
 
   //ID para crear, consultar y buscar completos
   Route.post(
     "instrumentaciondidactica/crear",
     "InstrumentaciondidacticaController.store"
-  );
-  Route.get(
-    "instrumentaciondidactica/consulta",
-    "InstrumentaciondidacticaController.index"
-  );
+  ).middleware("auth");
+  //Multiple
   Route.get(
     "instrumentaciondidactica/intrumentacion_completa",
     "InstrumentaciondidacticaController.intrumentacion_completa"
-  );
+  ).middleware("auth");
+
+  //ID solo para el evaluador
+  Route.get(
+    "instrumentaciondidactica/buscar_intrumentacion/:id_ins",
+    "InstrumentaciondidacticaController.buscarIntrumentacion"
+  ).middleware("auth");
+  Route.get(
+    "instrumentaciondidactica/consulta_intrumentaciones",
+    "InstrumentaciondidacticaController.index"
+  ).middleware("auth");
+  Route.post(
+    "instrumentaciondidactica/evaluar",
+    "InstrumentaciondidacticaController.evaluar"
+  ).middleware("auth");
 
   //ID para crear, consultar y buscar completos
   Route.post(
     "instrumentaciondidacticaunidad/crear",
     "InstrumentaciondidacticaunidadController.store"
-  );
+  ).middleware("auth");
   Route.get(
     "instrumentaciondidacticaunidad/consulta",
     "InstrumentaciondidacticaunidadController.index"
-  );
+  ).middleware("auth");
   Route.get(
     "instrumentaciondidacticaunidad/editar",
     "InstrumentaciondidacticaunidadController.update"
-  );
+  ).middleware("auth");
 
   Route.post(
     "evidenciasaprendizaje/crear",
     "EvidenciasaprendizajeController.store"
-  );
+  ).middleware("auth");
   Route.get(
-    "evidenciasaprendizaje/consulta",
+    "evidenciasaprendizaje/consulta/:id_ins",
     "EvidenciasaprendizajeController.index"
   );
 
