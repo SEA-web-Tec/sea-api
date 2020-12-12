@@ -1,5 +1,7 @@
 "use strict";
 const Materia = use("App/Models/Materia");
+const Database = use("Database");
+
 class MateriaController {
   async index() {
     return await Materia.query().fetch();
@@ -22,6 +24,13 @@ class MateriaController {
       message: "Se creo la materia exitosamente",
       Materia: materia,
     });
+  }
+
+  async conGrupo({ response }) {
+    const materias = await Database.table("materias")
+      .distinct("materias.id", "nombre", "unidades")
+      .innerJoin("grupos", "grupos.materia_id", "materias.id");
+    return response.status(201).json(materias);
   }
 }
 
