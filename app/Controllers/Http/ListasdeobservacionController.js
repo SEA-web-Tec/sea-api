@@ -56,7 +56,7 @@ class ListasdeobservacionController {
     .where("id_observacion", params.id_observacion).fetch();
 
     return response.json({
-      Listasdecotejo: renlo,
+      Listasdeobservacion: renlo,
     });
   }
 
