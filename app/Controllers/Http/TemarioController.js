@@ -12,7 +12,8 @@ const Temario = use("App/Models/Temario");
 class TemarioController {
   //buscar indice
   async index() {
-    return await Temario.query().fetch();
+    const temarios = await Temario.query().distinct("id").fetch();
+    return temarios;
   }
 
   //crear
