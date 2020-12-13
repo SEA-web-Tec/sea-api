@@ -8,11 +8,11 @@ class ListasdeobservacionController {
   async index ({ request, response, view, params }) {
     //const info = request.all();
 
-    const lc = await Listasdeobservacion.query()
+    const lo = await Listasdeobservacion.query()
     .where("id_usuario", params.id_usuario).fetch();
 
     return response.json({
-      Listasdecotejo: lc,
+      Listasdeobservacion: lo,
     });
   }
 
@@ -56,7 +56,7 @@ class ListasdeobservacionController {
     .where("id_observacion", params.id_observacion).fetch();
 
     return response.json({
-      Listasdecotejo: renlo,
+      Listasdeobservacion: renlo,
     });
   }
 
@@ -102,7 +102,7 @@ class ListasdeobservacionController {
     }
 
     return response.json({
-      Listasdecotejo: lo,
+      Listasdeobservacion: lo,
       Aux: aux,
     });
   }
