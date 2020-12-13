@@ -1,21 +1,8 @@
 "use strict";
-const Reactivos = use('App/Models/Reactivos.js')
+const Reactivos = use("App/Models/Reactivos.js");
 class ReactivosController {
   async store({ request, response }) {
-    //try {
-    //solicitar info
     const info = request.all();
-    /*const reactivos = Reactivos.create({
-      id,
-      id_maestro,
-      id_materia,
-      unidad,
-      tipo,
-      texto_reactivo,
-      respuesta_correcta,
-    });
-    return reactivos;*/
-    
     const reactivos = await Reactivos.create({
       id: info.id,
       id_maestro: info.id_maestro,
@@ -27,14 +14,19 @@ class ReactivosController {
     });
     return response.json({
       message: "Se creo el reactivo exitosamente",
-      Reactivo: reactivos,
+      reactivos: reactivos,
     });
-    } /*catch (error) {
-      return response.json({
-        message:"Ha ocurrido un error en el servidor"
-      });*/
-    //}
-  //}
+  }
+
+  async specific({ response, params, auth }) {
+    const user = await auth.getUser();
+    const reactivos = await Reactivos.query()
+      .where("id_maestro", user.id)
+      .andWhere("id_materia", params.id_materia)
+      .andWhere("unidad", params.unidad)
+      .fetch();
+    return response.status(201).json(reactivos);
+  }
 }
 
 module.exports = ReactivosController;

@@ -24,12 +24,20 @@ Route.group(() => {
   Route.get("grupos/:id", "GrupoController.show").middleware("auth");
   Route.post("grupos/crear", "GrupoController.store").middleware("auth");
 
-  //Materias
+  // Materias
   Route.get("materias", "MateriaController.index").middleware("auth");
   Route.post("materias/crear", "MateriaController.store").middleware("auth");
   Route.get("materias/con-grupo", "MateriaController.conGrupo").middleware(
     "auth"
   );
+
+  //Reactivos
+  Route.get("reactivos/:id_materia/:unidad", "ReactivosController.specific");
+  Route.post("reactivos/crear", "ReactivosController.store");
+
+  // Examenes
+  Route.get("examenes", "ExameneController.index").middleware("auth");
+  Route.post("examenes/crear", "ExameneController.store").middleware("auth");
 
   //Temario
   Route.get("temarios", "TemarioController.index").middleware("auth");
@@ -80,45 +88,21 @@ Route.group(() => {
     "EvidenciasaprendizajeController.index"
   );
 
-  //Reactivos
-  Route.post("reactivo/crear", "ReactivosController.store");
-
   //rubricas
-  Route.post(
-    "rubrica/crear",
-    "RubricaController.store"
-  );
+  Route.post("rubrica/crear", "RubricaController.store");
   //consulta las rubricas del usuario por su id
-  Route.get(
-    "rubrica/consultarubrica/:id_usuario",
-    "RubricaController.index"
-  );
+  Route.get("rubrica/consultarubrica/:id_usuario", "RubricaController.index");
   //consulta los renglones de la rubrica por su id
-  Route.get(
-    "rubrica/consultarenglones/:id_rubrica",
-    "RubricaController.show"
-  );
+  Route.get("rubrica/consultarenglones/:id_rubrica", "RubricaController.show");
   //consulta datos de una rubrica en especifico sin renglones
-  Route.get(
-    "rubrica/consultarub/:id",
-    "RubricaController.consultarubrica"
-  );
+  Route.get("rubrica/consultarub/:id", "RubricaController.consultarubrica");
 
-  Route.delete(
-    "rubrica/borrarrubrica/:id",
-    "RubricaController.destroy"
-  );
+  Route.delete("rubrica/borrarrubrica/:id", "RubricaController.destroy");
 
-  Route.delete(
-    "rubrica/borrarenglon/:id",
-    "RubricaController.borrarrenglon"
-  );
+  Route.delete("rubrica/borrarenglon/:id", "RubricaController.borrarrenglon");
 
   //listascotejo
-  Route.post(
-    "listacojeto/crear",
-    "ListasdecotejoController.store"
-  );
+  Route.post("listacojeto/crear", "ListasdecotejoController.store");
   //consulta las listas cotejo del usuario por su id
   Route.get(
     "listacotejo/consultalistacotejo/:id_usuario",
@@ -136,10 +120,7 @@ Route.group(() => {
   );
 
   //listasobservaciones
-  Route.post(
-    "listasobservacion/crear",
-    "ListasdeobservacionController.store"
-  );
+  Route.post("listasobservacion/crear", "ListasdeobservacionController.store");
   //consulta las lista observacion del usuario por su id
   Route.get(
     "listasobservacion/consultalistasobservacion/:id_usuario",
@@ -154,6 +135,5 @@ Route.group(() => {
   Route.get(
     "listasobservacion/consultalo/:id",
     "ListasdeobservacionController.consultalo"
-  );  
-
+  );
 }).prefix("api/v1/");
