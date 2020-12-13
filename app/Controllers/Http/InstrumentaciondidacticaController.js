@@ -96,11 +96,10 @@ class InstrumentaciondidacticaController {
       .where("grupo_id", info.grupo_id)
       .andWhere("usuario_id", info.usuario_id)
       .first();
-    const grupo = await Grupo.query().where("id", info.grupo_id).fetch();
+    const grupo = await Grupo.query().where("id", info.grupo_id).first();
     const materia = await Materia.query()
-      .where("id", grupo.toJSON()[0].materia_id)
+      .where("id", grupo.toJSON().materia_id)
       .first();
-
     const unidades = await Instrumentaciondidacticaunidad.query()
       .where("id_ins", intrumentacion.toJSON().id)
       .fetch();
