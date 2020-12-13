@@ -129,10 +129,10 @@ Route.group(() => {
     "RubricaController.destroy"
   );
 
-  //borrar y editar renglon
+  //editar todos los datos de una rubrica
   Route.post(
-    "rubrica/borrarenglon/:id",
-    "RubricaController.borrareditarrenglon"
+    "rubrica/editar/:id",
+    "RubricaController.editar"
   );
 
   //listascotejo
@@ -165,10 +165,10 @@ Route.group(() => {
     "ListasdecotejoController.destroy"
   );
 
-  //borrar y editar renglon
+  //editar todos los datos de una lista de cotejo
   Route.post(
-    "listacotejo/borrarenglon/:id",
-    "ListasdecotejoController.borrareditarrenglon"
+    "listacotejo/editar/:id",
+    "ListasdecotejoController.editar"
   );
 
   //listasobservaciones
@@ -201,10 +201,10 @@ Route.group(() => {
     "ListasdeobservacionController.destroy"
   );
 
-  //borrar y editar renglon
+  //editar todos los datos de una lista de observacion
   Route.post(
-    "listasobservacion/borrarenglon/:id",
-    "ListasdeobservacionController.borrareditarrenglon"
+    "listasobservacion/editar/:id",
+    "ListasdeobservacionController.editar"
   );
 
 }).prefix("api/v1/");

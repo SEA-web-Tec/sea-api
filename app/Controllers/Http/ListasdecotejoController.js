@@ -77,7 +77,7 @@ class ListasdecotejoController {
   async update ({ params, request, response }) {
   }
 
-  async borrareditarrenglon ({params, response, request}) {
+  async editar ({params, response, request}) {
     let aux;
     const info = request.all()
 
