@@ -7,6 +7,7 @@ class CalendarizacionesSchema extends Schema {
   up () {
     this.create('calendarizaciones', (table) => {
       table.increments("id").notNullable().primary();
+      table.integer("id_evidenciaaprendizaje").notNullable();
       table.string('instrucciones').notNullable()
       //table.boolean('es_por_equipo').notNullable()
       table.datetime('fecha_subida1ra').notNullable()

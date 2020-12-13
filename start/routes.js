@@ -104,30 +104,35 @@ Route.group(() => {
     "rubrica/crear",
     "RubricaController.store"
   );
+
   //consulta las rubricas del usuario por su id
   Route.get(
     "rubrica/consultarubrica/:id_usuario",
     "RubricaController.index"
   );
+
   //consulta los renglones de la rubrica por su id
   Route.get(
     "rubrica/consultarenglones/:id_rubrica",
     "RubricaController.show"
   );
+
   //consulta datos de una rubrica en especifico sin renglones
   Route.get(
     "rubrica/consultarub/:id",
     "RubricaController.consultarubrica"
   );
-
+  
+  //borra una rubrica con sus renglones
   Route.delete(
     "rubrica/borrarrubrica/:id",
     "RubricaController.destroy"
   );
 
-  Route.delete(
+  //borrar y editar renglon
+  Route.post(
     "rubrica/borrarenglon/:id",
-    "RubricaController.borrarrenglon"
+    "RubricaController.borrareditarrenglon"
   );
 
   //listascotejo
@@ -135,20 +140,35 @@ Route.group(() => {
     "listacojeto/crear",
     "ListasdecotejoController.store"
   );
+
   //consulta las listas cotejo del usuario por su id
   Route.get(
     "listacotejo/consultalistacotejo/:id_usuario",
     "ListasdecotejoController.index"
   );
+
   //consulta los renglones de la lista cotejo por su id
   Route.get(
     "listacotejo/consultarenglones/:id_cotejo",
     "ListasdecotejoController.show"
   );
+
   //consulta datos de una lc en especifico sin renglones
   Route.get(
     "listacotejo/consultalc/:id",
     "ListasdecotejoController.consultalc"
+  );
+
+  //borra una lista cotejo con sus renglones
+  Route.delete(
+    "listacotejo/borrarlo/:id",
+    "ListasdecotejoController.destroy"
+  );
+
+  //borrar y editar renglon
+  Route.post(
+    "listacotejo/borrarenglon/:id",
+    "ListasdecotejoController.borrareditarrenglon"
   );
 
   //listasobservaciones
@@ -156,20 +176,35 @@ Route.group(() => {
     "listasobservacion/crear",
     "ListasdeobservacionController.store"
   );
+
   //consulta las lista observacion del usuario por su id
   Route.get(
     "listasobservacion/consultalistasobservacion/:id_usuario",
     "ListasdeobservacionController.index"
   );
+
   //consulta los renglones de la lista observacion por su id
   Route.get(
     "listasobservacion/consultarenglones/:id_observacion",
     "ListasdeobservacionController.show"
   );
-  //consulta datos de una lc en especifico sin renglones
+
+  //consulta datos de una lo en especifico sin renglones
   Route.get(
     "listasobservacion/consultalo/:id",
     "ListasdeobservacionController.consultalo"
-  );  
+  );
+
+  //borra una lista observacion con sus renglones
+  Route.delete(
+    "listasobservacion/borrarlo/:id",
+    "ListasdeobservacionController.destroy"
+  );
+
+  //borrar y editar renglon
+  Route.post(
+    "listasobservacion/borrarenglon/:id",
+    "ListasdeobservacionController.borrareditarrenglon"
+  );
 
 }).prefix("api/v1/");
