@@ -35,7 +35,7 @@ class ListasdecotejoController {
     for (let i = 0; i < info.Renglones_lc.length; i++) {
       //const element = array[i];
       aux = await Rengloneslc.create({
-        numrenglon: i+1,
+        numrenglon: info.Renglones_lc[i].numrenglon,
         id_cotejo: listadecotejo.toJSON().id,
         criterio: info.Renglones_lc[i].criterio,
         puntos: info.Renglones_lc[i].puntos,
@@ -85,10 +85,17 @@ class ListasdecotejoController {
     .where("id_cotejo", params.id)
     .delete();
 
+    const lc = await Listasdecotejo.query()
+    .where("id", params.id)
+    .update({
+      nombre: info.Listasdecotejo.nombre,
+      descripcion: info.Listasdecotejo.descripcion,
+    });
+
     for (let i = 0; i < info.Renglones_lc.length; i++) {
       aux = await Rengloneslc
       .create({
-        numrenglon: i+1,
+        numrenglon: info.Renglones_lc[i].numrenglon,
         id_cotejo: params.id,
         criterio: info.Renglones_lc[i].criterio,
         puntos: info.Renglones_lc[i].puntos,
@@ -96,6 +103,7 @@ class ListasdecotejoController {
     }
 
     return response.json({
+      Listasdecotejo: lc,
       Aux: aux,
     });
   }
