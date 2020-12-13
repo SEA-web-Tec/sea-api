@@ -19,7 +19,8 @@ class GrupoController {
         "carrera",
         "fotoPortada",
         "periodo",
-        "anio"
+        "anio",
+        "materias.unidades"
       )
       .innerJoin("materias", "grupos.materia_id", "materias.id")
       .where("usuario_id", params.id);

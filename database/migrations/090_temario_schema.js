@@ -10,9 +10,9 @@ class TemarioSchema extends Schema {
       table.integer("tema").notNullable().defaultTo("0");
       table.integer("subtema").notNullable().defaultTo("0");
       table.text("descripcion").notNullable();
-      table.string("objetivos").notNullable();
+      table.string("objetivos").nullable();
       table.text("competencias").notNullable();
-      table.text("actividadesDeAprendizaje").notNullable();
+      table.text("actividadesDeAprendizaje").nullable();
       //table.primary("materia", "tema", "subtema"["pk_temarios"]);
       table.timestamps();
     });
