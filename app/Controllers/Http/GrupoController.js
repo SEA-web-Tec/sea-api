@@ -12,7 +12,15 @@ class GrupoController {
 
   async show({ response, params }) {
     const grupos = await Database.table("grupos")
-      .select("grupos.id", "nombre", "grupo", "carrera", "fotoPortada")
+      .select(
+        "grupos.id",
+        "nombre",
+        "grupo",
+        "carrera",
+        "fotoPortada",
+        "periodo",
+        "anio"
+      )
       .innerJoin("materias", "grupos.materia_id", "materias.id")
       .where("usuario_id", params.id);
     return response.status(201).json(grupos);
