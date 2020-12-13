@@ -35,7 +35,7 @@ class ListasdeobservacionController {
     for (let i = 0; i < info.Renglones_lo.length; i++) {
       //const element = array[i];
       aux = await Rengloneslo.create({
-        numrenglon: i+1,
+        numrenglon: info.Renglones_lo[i].numrenglon,
         id_observacion: listadeobervacion.toJSON().id,
         criterio: info.Renglones_lo[i].criterio,
         puntos: info.Renglones_lo[i].puntos,
@@ -76,7 +76,45 @@ class ListasdeobservacionController {
   async update ({ params, request, response }) {
   }
 
+  async editar ({params, response, request}) {
+    let aux;
+    const info = request.all()
+
+    await Rengloneslo.query()
+    .where("id_observacion", params.id)
+    .delete();
+
+    const lo = await Listasdeobservacion.query()
+    .where("id", params.id)
+    .update({
+      nombre: info.Listasdeobservacion.nombre,
+      descripcion: info.Listasdeobservacion.descripcion,
+    });
+
+    for (let i = 0; i < info.Renglones_lo.length; i++) {
+      aux = await Rengloneslo
+      .create({
+        numrenglon: info.Renglones_lo[i].numrenglon,
+        id_observacion: params.id,
+        criterio: info.Renglones_lo[i].criterio,
+        puntos: info.Renglones_lo[i].puntos,
+      });
+    }
+
+    return response.json({
+      Listasdecotejo: lo,
+      Aux: aux,
+    });
+  }
+
   async destroy ({ params, request, response }) {
+    await Listasdeobservacion.query().where("id", params.id).delete();
+    await Rengloneslo.query()
+    .where("id_observacion", params.id).delete();
+
+    return response.json({
+      message: "Se borro la lista de observacion",
+    });
   }
 }
 

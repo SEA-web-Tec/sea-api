@@ -18,7 +18,6 @@ class InstrumentaciondidacticaunidadSchema extends Schema {
       table.text("material_apoyo").notNullable();
       table.integer("semana_clases").defaultTo("0");
       table.integer("semana_evaluacion").defaultTo("0");
-      table.text("comentario").nullable();
       /*table.primary("id_instrumentaciondidactica", "unidad", [
         "pk_instrumentaciondidacticaunidad",
       ]);*/

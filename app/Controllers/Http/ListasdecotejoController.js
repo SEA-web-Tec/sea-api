@@ -35,7 +35,7 @@ class ListasdecotejoController {
     for (let i = 0; i < info.Renglones_lc.length; i++) {
       //const element = array[i];
       aux = await Rengloneslc.create({
-        numrenglon: i+1,
+        numrenglon: info.Renglones_lc[i].numrenglon,
         id_cotejo: listadecotejo.toJSON().id,
         criterio: info.Renglones_lc[i].criterio,
         puntos: info.Renglones_lc[i].puntos,
@@ -77,7 +77,47 @@ class ListasdecotejoController {
   async update ({ params, request, response }) {
   }
 
+  async editar ({params, response, request}) {
+    let aux;
+    const info = request.all()
+
+    await Rengloneslc.query()
+    .where("id_cotejo", params.id)
+    .delete();
+
+    const lc = await Listasdecotejo.query()
+    .where("id", params.id)
+    .update({
+      nombre: info.Listasdecotejo.nombre,
+      descripcion: info.Listasdecotejo.descripcion,
+    });
+
+    for (let i = 0; i < info.Renglones_lc.length; i++) {
+      aux = await Rengloneslc
+      .create({
+        numrenglon: info.Renglones_lc[i].numrenglon,
+        id_cotejo: params.id,
+        criterio: info.Renglones_lc[i].criterio,
+        puntos: info.Renglones_lc[i].puntos,
+      });
+    }
+
+    return response.json({
+      Listasdecotejo: lc,
+      Aux: aux,
+    });
+  }
+
   async destroy ({ params, request, response }) {
+    //const info = request.all();
+
+    await Listasdecotejo.query().where("id", params.id).delete();
+    await Rengloneslc.query()
+    .where("id_cotejo", params.id).delete();
+
+    return response.json({
+      message: "Se borro la lista de cotejo",
+    });
   }
 }
 

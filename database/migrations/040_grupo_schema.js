@@ -14,8 +14,8 @@ class GrupoSchema extends Schema {
         .references("id")
         .inTable("usuarios");
       table.string("grupo", 1).notNullable();
-      table.specificType('anio', 'year').notNullable().defaultTo(0);
-      table.integer("periodo", 11).notNullable().defaultTo(0);
+      table.specificType("anio", "year").notNullable().defaultTo(0);
+      table.enu("periodo", ["ENE-JUN", "AGO-DIC"]).notNullable();
       table.text("fotoPortada", "longtext").nullable().defaultTo(null);
       table.timestamps();
     });
