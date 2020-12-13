@@ -11,7 +11,7 @@ const Database = use("Database");
 class InstrumentaciondidacticaController {
   //solo el evaluador buscar todas las intrumentaciones Entregadas
   async index({ response, auth }) {
-    const usuario = auth.getUser();
+    const usuario = await auth.getUser();
     if (usuario.userType === 1) {
       const Database = use("Database");
       const busqueda = await Database.table("instrumentaciondidacticas")
@@ -37,7 +37,7 @@ class InstrumentaciondidacticaController {
 
   //buscarIntrumentacion Seleccionada
   async buscarIntrumentacion({ response, params, auth }) {
-    const usuario = auth.getUser();
+    const usuario = await auth.getUser();
     if (usuario.userType === 1) {
       const intrumentacion = await Instrumentaciondidactica.query()
         .where("id", params.id_ins)
@@ -61,15 +61,13 @@ class InstrumentaciondidacticaController {
 
   //solo el evaluador
   async evaluar({ request, response, auth }) {
-    const usuario = auth.getUser();
+    const usuario = await auth.getUser();
     if (usuario.userType === 1) {
       const info = request.all();
-      console.log(info);
       let estado = "Aprobada";
       if (info.comentario != null) {
         estado = "Rechazada";
       }
-      console.log(estado);
       await Instrumentaciondidactica.query().where("id", info.id_ins).update({
         estado: estado,
         comentario: info.comentario,
