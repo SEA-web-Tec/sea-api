@@ -21,7 +21,8 @@ class GrupoController {
         "periodo",
         "anio",
         "materias.unidades",
-        "usuario_id"
+        "usuario_id",
+        "materia_id"
       )
       .innerJoin("materias", "grupos.materia_id", "materias.id")
       .where("usuario_id", params.id);

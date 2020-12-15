@@ -4,7 +4,7 @@ const Examene = use("App/Models/Examene");
 const Contenidoexamene = use("App/Models/Contenidoexamene.js");
 
 class ExameneController {
-  async index({ response, auth, params}) {
+  async index({ response, auth, params }) {
     const user = await auth.getUser();
     const examenes = await Examene.query()
       .where("id_maestro", user.id)
@@ -43,6 +43,8 @@ class ExameneController {
       contenidoExamen: contenidoExamen,
     });
   }
+
+  async update({ request, response, auth }) {}
 }
 
 module.exports = ExameneController;
