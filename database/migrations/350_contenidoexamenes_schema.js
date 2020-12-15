@@ -9,7 +9,7 @@ class ContenidoexamenesSchema extends Schema {
       table.increments("id").primary();
       table.integer("id_reactivo").unsigned().notNullable();
       table.integer("id_examen").unsigned().notNullable();
-      table.decimal("valor_reactivo", 4, 2);
+      table.float("valor_reactivo", 5, 2);
       table.timestamps();
     });
   }
