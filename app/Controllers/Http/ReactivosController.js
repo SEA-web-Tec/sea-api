@@ -18,7 +18,7 @@ class ReactivosController {
     });
   }
 
-  async store({ request, response }) {
+  async store({ request, response, auth }) {
     const info = request.all();
     const user = await auth.getUser();
     const reactivos = await Reactivos.create({

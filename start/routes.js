@@ -32,12 +32,20 @@ Route.group(() => {
   );
 
   //Reactivos
-  Route.get("reactivos/todo/:id_materia/", "ReactivosController.index");
-  Route.get("reactivos/:id_materia/:unidad", "ReactivosController.specific");
-  Route.post("reactivos/crear", "ReactivosController.store");
+  Route.get(
+    "reactivos/todo/:id_materia/",
+    "ReactivosController.index"
+  ).middleware("auth");
+  Route.get(
+    "reactivos/:id_materia/:unidad",
+    "ReactivosController.specific"
+  ).middleware("auth");
+  Route.post("reactivos/crear", "ReactivosController.store").middleware("auth");
 
   // Examenes
-  Route.get("examenes/:id_materia/", "ExameneController.index").middleware("auth");
+  Route.get("examenes/:id_materia/", "ExameneController.index").middleware(
+    "auth"
+  );
   Route.post("examenes/crear", "ExameneController.store").middleware("auth");
 
   // Temario
@@ -45,9 +53,10 @@ Route.group(() => {
   Route.post("temarios/crear", "TemarioController.store").middleware("auth");
 
   //Indicadores de alcence de ID
-  Route.post("indicadoresalcance/crear", "IndicadoresalcanceController.store")
-    .middleware("auth")
-    .middleware("auth");
+  Route.post(
+    "indicadoresalcance/crear",
+    "IndicadoresalcanceController.store"
+  ).middleware("auth");
   Route.get(
     "indicadoresalcance/consulta/",
     "IndicadoresalcanceController.index"
@@ -103,83 +112,108 @@ Route.group(() => {
   Route.get(
     "evidenciasaprendizaje/consulta/:id_ins",
     "EvidenciasaprendizajeController.index"
-  );
+  ).middleware("auth");
 
   //rubricas
-  Route.post("rubrica/crear", "RubricaController.store");
+  Route.post("rubrica/crear", "RubricaController.store").middleware("auth");
 
   //consulta las rubricas del usuario por su id
-  Route.get("rubrica/consultarubrica/:id_usuario", "RubricaController.index");
+  Route.get(
+    "rubrica/consultarubrica/:id_usuario",
+    "RubricaController.index"
+  ).middleware("auth");
 
   //consulta los renglones de la rubrica por su id
-  Route.get("rubrica/consultarenglones/:id_rubrica", "RubricaController.show");
+  Route.get(
+    "rubrica/consultarenglones/:id_rubrica",
+    "RubricaController.show"
+  ).middleware("auth");
 
   //consulta datos de una rubrica en especifico sin renglones
-  Route.get("rubrica/consultarub/:id", "RubricaController.consultarubrica");
+  Route.get(
+    "rubrica/consultarub/:id",
+    "RubricaController.consultarubrica"
+  ).middleware("auth");
 
   //borra una rubrica con sus renglones
-  Route.delete("rubrica/borrarrubrica/:id", "RubricaController.destroy");
+  Route.delete(
+    "rubrica/borrarrubrica/:id",
+    "RubricaController.destroy"
+  ).middleware("auth");
 
   //editar todos los datos de una rubrica
-  Route.post("rubrica/editar/:id", "RubricaController.editar");
+  Route.post("rubrica/editar/:id", "RubricaController.editar").middleware(
+    "auth"
+  );
 
   //listascotejo
-  Route.post("listacojeto/crear", "ListasdecotejoController.store");
+  Route.post("listacojeto/crear", "ListasdecotejoController.store").middleware(
+    "auth"
+  );
 
   //consulta las listas cotejo del usuario por su id
   Route.get(
     "listacotejo/consultalistacotejo/:id_usuario",
     "ListasdecotejoController.index"
-  );
+  ).middleware("auth");
 
   //consulta los renglones de la lista cotejo por su id
   Route.get(
     "listacotejo/consultarenglones/:id_cotejo",
     "ListasdecotejoController.show"
-  );
+  ).middleware("auth");
 
   //consulta datos de una lc en especifico sin renglones
   Route.get(
     "listacotejo/consultalc/:id",
     "ListasdecotejoController.consultalc"
-  );
+  ).middleware("auth");
 
   //borra una lista cotejo con sus renglones
-  Route.delete("listacotejo/borrarlo/:id", "ListasdecotejoController.destroy");
+  Route.delete(
+    "listacotejo/borrarlo/:id",
+    "ListasdecotejoController.destroy"
+  ).middleware("auth");
 
   //editar todos los datos de una lista de cotejo
-  Route.post("listacotejo/editar/:id", "ListasdecotejoController.editar");
+  Route.post(
+    "listacotejo/editar/:id",
+    "ListasdecotejoController.editar"
+  ).middleware("auth");
 
   //listasobservaciones
-  Route.post("listasobservacion/crear", "ListasdeobservacionController.store");
+  Route.post(
+    "listasobservacion/crear",
+    "ListasdeobservacionController.store"
+  ).middleware("auth");
 
   //consulta las lista observacion del usuario por su id
   Route.get(
     "listasobservacion/consultalistasobservacion/:id_usuario",
     "ListasdeobservacionController.index"
-  );
+  ).middleware("auth");
 
   //consulta los renglones de la lista observacion por su id
   Route.get(
     "listasobservacion/consultarenglones/:id_observacion",
     "ListasdeobservacionController.show"
-  );
+  ).middleware("auth");
 
   //consulta datos de una lo en especifico sin renglones
   Route.get(
     "listasobservacion/consultalo/:id",
     "ListasdeobservacionController.consultalo"
-  );
+  ).middleware("auth");
 
   //borra una lista observacion con sus renglones
   Route.delete(
     "listasobservacion/borrarlo/:id",
     "ListasdeobservacionController.destroy"
-  );
+  ).middleware("auth");
 
   //editar todos los datos de una lista de observacion
   Route.post(
     "listasobservacion/editar/:id",
     "ListasdeobservacionController.editar"
-  );
+  ).middleware("auth");
 }).prefix("api/v1/");
