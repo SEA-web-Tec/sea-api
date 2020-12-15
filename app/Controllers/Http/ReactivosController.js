@@ -1,6 +1,6 @@
 "use strict";
 const Reactivos = use("App/Models/Reactivos.js");
-const Materias = use("App/Models/Materias.js");
+const Materias = use("App/Models/Materia.js");
 
 class ReactivosController {
   async index({ response, auth, params }) {
@@ -9,7 +9,13 @@ class ReactivosController {
       .where("id_maestro", user.id)
       .where("id_materia", params.id_materia)
       .fetch();
-    return response.status(201).json(reactivos);
+    const materias = await Materias.query()
+      .where("id", params.id_materia)
+      .first();
+    return response.status(201).json({
+      reactivos: reactivos,
+      unidades: materias.toJSON().unidades,
+    });
   }
 
   async store({ request, response }) {
