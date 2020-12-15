@@ -1,11 +1,11 @@
 "use strict";
 const Reactivos = use("App/Models/Reactivos.js");
 class ReactivosController {
-  async store({ request, response }) {
+  async store({ request, response, auth }) {
     const info = request.all();
+    const user = await auth.getUser();
     const reactivos = await Reactivos.create({
-      id: info.id,
-      id_maestro: info.id_maestro,
+      id_maestro: user.id,
       id_materia: info.id_materia,
       unidad: info.unidad,
       tipo: info.tipo,
