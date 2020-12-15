@@ -15,13 +15,11 @@ class ReactivosSchema extends Schema {
           "abierto",
           "opcion_multiple",
           "falso_verdadero",
-          "relacional",
-          "complemento",
         ])
         .notNullable()
         .defaultTo("abierto");
       table.text("texto_reactivo").notNullable();
-      table.text("respuesta_correcta").notNullable();
+      table.text("respuesta_correcta").nullable();
       table.timestamps();
     });
   }

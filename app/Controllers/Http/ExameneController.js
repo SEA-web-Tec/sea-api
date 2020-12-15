@@ -4,9 +4,12 @@ const Examene = use("App/Models/Examene");
 const Contenidoexamene = use("App/Models/Contenidoexamene.js");
 
 class ExameneController {
-  async index({ response, auth }) {
+  async index({ response, auth, params}) {
     const user = await auth.getUser();
-    const examenes = await Examene.query().where("id_maestro", user.id).fetch();
+    const examenes = await Examene.query()
+      .where("id_maestro", user.id)
+      .andWhere("id_materia", params.id_materia)
+      .fetch();
     return response.status(201).json(examenes);
   }
 

@@ -32,11 +32,12 @@ Route.group(() => {
   );
 
   //Reactivos
+  Route.get("reactivos/todo/:id_materia/", "ReactivosController.index");
   Route.get("reactivos/:id_materia/:unidad", "ReactivosController.specific");
   Route.post("reactivos/crear", "ReactivosController.store");
 
   // Examenes
-  Route.get("examenes", "ExameneController.index").middleware("auth");
+  Route.get("examenes/:id_materia/", "ExameneController.index").middleware("auth");
   Route.post("examenes/crear", "ExameneController.store").middleware("auth");
 
   // Temario
