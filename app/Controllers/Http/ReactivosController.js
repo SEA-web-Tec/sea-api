@@ -1,6 +1,15 @@
 "use strict";
 const Reactivos = use("App/Models/Reactivos.js");
 class ReactivosController {
+  async index({ response, auth, params }) {
+    const user = await auth.getUser();
+    const reactivos = await Reactivos.query()
+      .where("id_maestro", user.id)
+      .where("id_materia", params.id_materia)
+      .fetch();
+    return response.status(201).json(reactivos);
+  }
+
   async store({ request, response }) {
     const info = request.all();
     const reactivos = await Reactivos.create({

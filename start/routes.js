@@ -32,6 +32,7 @@ Route.group(() => {
   );
 
   //Reactivos
+  Route.get("reactivos/todo/:id_materia/", "ReactivosController.index");
   Route.get("reactivos/:id_materia/:unidad", "ReactivosController.specific");
   Route.post("reactivos/crear", "ReactivosController.store");
 
