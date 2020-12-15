@@ -23,7 +23,6 @@ class MateriaController {
       unidades: count.length,
       carrera: info.carrera,
     });
-
     return response.json({
       message: "Se creo la materia exitosamente",
       Materia: materia,
