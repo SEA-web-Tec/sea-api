@@ -1,5 +1,7 @@
 "use strict";
 const Reactivos = use("App/Models/Reactivos.js");
+const Materias = use("App/Models/Materias.js");
+
 class ReactivosController {
   async index({ response, auth, params }) {
     const user = await auth.getUser();
