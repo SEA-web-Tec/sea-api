@@ -5,7 +5,7 @@ const Database = use("Database");
 class GrupoController {
   async index({ response }) {
     const grupos = await Database.table("grupos")
-      .select("grupos.id", "nombre", "grupo")
+      .select("grupos.id", "nombre", "grupo", "usuario_id")
       .innerJoin("materias", "grupos.materia_id", "materias.id");
     return response.status(201).json(grupos);
   }
@@ -20,7 +20,8 @@ class GrupoController {
         "fotoPortada",
         "periodo",
         "anio",
-        "materias.unidades"
+        "materias.unidades",
+        "usuario_id"
       )
       .innerJoin("materias", "grupos.materia_id", "materias.id")
       .where("usuario_id", params.id);
@@ -38,7 +39,7 @@ class GrupoController {
       fotoPortada: info.fotoPortada,
     });
     return response.json({
-      message: "Se creo el grupo exitosamente",
+      message: "Se creó el grupo exitosamente",
       grupo: grupo,
     });
   }
